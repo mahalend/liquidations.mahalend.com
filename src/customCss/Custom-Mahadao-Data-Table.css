@@ -1,0 +1,125 @@
+.MuiDataGrid-root {
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(21px) !important;
+  border-radius: 6px !important;
+  text-align: center !important;
+  border: 1px solid #FF742620 !important;
+  padding: 16px 32px;
+  font-family: Inter, serif !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  line-height: 140% !important;
+  color: rgba(255, 255, 255, 0.88);
+  min-width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .MuiDataGrid-root {
+    overflow-x: scroll !important;
+  }
+}
+
+.MuiDataGrid-main {
+  min-width: 900px;
+}
+
+.MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+.MuiDataGrid-columnsContainer {
+  font-family: Inter, serif !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  line-height: 150% !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.32) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.MuiDataGrid-cell {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  cursor: pointer !important;
+  line-height: unset !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell {
+  overflow-y: scroll !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell--withRenderer {
+  align-items: unset !important;
+}
+
+.MuiDataGrid-cell:focus-within {
+  outline: none !important;
+}
+
+.MuiTablePagination-root {
+  font-family: Inter, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  line-height: 140% !important;
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+.MuiIconButton-root.Mui-disabled {
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+.MuiDataGrid-footerContainer {
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+  min-width: 900px !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-toolbarContainer {
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+}
+
+.MuiDataGrid-columnHeader {
+  padding: 0 5px 0 0 !important;
+}
+
+.MuiDataGrid-columnHeader {
+  outline: none !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  overflow: unset !important;
+  font-weight: 600 !important;
+  color: #FFFFFF64 !important;
+}
+
+.fontWeight300 {
+  font-weight: 300 !important;
+}
+
+.viewAll {
+  position: absolute;
+  bottom: 34px;
+  left: 40px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.noResultContainer {
+  width: 100%;
+  margin-top: 100px;
+  z-index: 100;
+}
+
+.noResultContainer .internal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
