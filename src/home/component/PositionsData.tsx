@@ -124,7 +124,7 @@ const AllLoansTable = (props: Props) => {
               params.value.map((data: IUserBorrowReserve) => {
                 return (
                   <div>
-                    {data.reserve.symbol}
+                    [{data.reserve.price.priceInEth} $ETH] {data.reserve.symbol}
                   </div>
                 )
               })
