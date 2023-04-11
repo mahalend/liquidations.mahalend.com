@@ -2,13 +2,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
 import {BigNumber} from "ethers";
 import React, {useState} from 'react';
-import '../../customCss/Custom-Mahadao-Data-Table.css';
-import TextWrapper from "../../components/TextWrapper";
-import {truncateMiddle} from "../../utils";
+import {ro} from "timeago.js/lib/lang";
 
 import IconLoader from "../../components/IconLoader";
+import TextWrapper from "../../components/TextWrapper";
+import '../../customCss/Custom-Mahadao-Data-Table.css';
 import config from "../../config";
-import {IUserBorrowReserve, IUserCollateralReserve, IUserData, IUserDataWithHF} from "../../utils/interface";
+import {getDisplayBalance} from "../../utils/formatBalance";
+import {IUserBorrowReserve, IUserCollateralReserve, IUserDataWithHF} from "../../utils/interface";
 import {useGetChainId} from "../../utils/NetworksCustomHooks";
 
 export function SortedDescendingIcon() {
@@ -47,14 +48,13 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  value: {isLoading: boolean; data: IUserDataWithHF[]};
+  value: IUserDataWithHF[];
 };
 
 const PAGINATION_PAGE_SIZE = 5
 
 
-const AllLoansTable = (props: Props) => {
-  console.log('value', props.value)
+const AllPositionData = (props: Props) => {
   const chainId = useGetChainId()
   const [pageNo, setPageNo] = useState<number>(0);
   const noOfSize = 5;
@@ -77,19 +77,17 @@ const AllLoansTable = (props: Props) => {
       renderCell: (params: any) => {
         return (
           <div className="single-line-center-start" onClick={() => window.open(`${config[chainId].etherscanUrl}/address/${params.value}`)}>
-            {truncateMiddle(params.value, 15)}
+            {params.value}
+            {/*{truncateMiddle(params.value, 15)}*/}
             <IconLoader
               iconName={'ArrowLink'}
               iconType={'arrow'}
-              onClick={() =>
-                window.open(`${config[chainId].etherscanUrl}/address/${params.row.owner}`)
-              }
             />
           </div>
         );
       },
     },
-   {
+    {
       field: 'collateralReserve',
       headerName: 'COLLATERAL',
       flex: 0.2,
@@ -98,10 +96,10 @@ const AllLoansTable = (props: Props) => {
         return (
           <div className={'start-center'}>
             {
-              params.value.map((data: IUserCollateralReserve) => {
+              params.value.map((data: IUserCollateralReserve, index: number) => {
                 return (
-                  <div>
-                    [{data.reserve.price.priceInEth} $ETH] {data.reserve.symbol}
+                  <div key={index}>
+                    {getDisplayBalance(BigNumber.from(data.currentATokenBalance), data.reserve.decimals)} {data.reserve.symbol}
                   </div>
                 )
               })
@@ -119,10 +117,10 @@ const AllLoansTable = (props: Props) => {
         return (
           <div className={'start-center'}>
             {
-              params.value.map((data: IUserBorrowReserve) => {
+              params.value.map((data: IUserBorrowReserve, index: number) => {
                 return (
-                  <div>
-                    [{data.reserve.price.priceInEth} $ETH] {data.reserve.symbol}
+                  <div key={index}>
+                    {getDisplayBalance(BigNumber.from(data.currentTotalDebt), data.reserve.decimals)} {data.reserve.symbol}
                   </div>
                 )
               })
@@ -131,30 +129,19 @@ const AllLoansTable = (props: Props) => {
         );
       },
     },
-    /*{
-      field: 'borrowReserve',
-      headerName: 'COLLATERAL RATIO',
+    {
+      field: 'hf',
+      headerName: 'Health factor',
       flex: 0.23,
       sortable: false,
-      sortingOrder: ['asc', 'desc'],
-      cellClassName: (params: any) =>
-        clsx('super-app', {
-          negative: params.row.isLiquidateable,
-          positive: !params.row.isLiquidateable,
-        }),
       renderCell: (params: any) => {
         return (
-          <div
-            className={'start-center'}
-            onClick={() => {
-              window.open(`/#/loan/details/${params.row.owner}/${params.row.token}`);
-            }}
-          >
-            {Number(params.value.toString()).toLocaleString()}%
+          <div className={'start-center'}>
+            {Number(getDisplayBalance(params.value)).toFixed(4)}
           </div>
         );
       },
-    },*/
+    },
     /*{
       field: 'delete',
       headerName: 'LIQUIDATE',
@@ -172,30 +159,6 @@ const AllLoansTable = (props: Props) => {
     },*/
   ];
 
-  const LoadingOverlayComponent = () => {
-    return (
-      <div className="noResultContainer">
-        <div className="internal">
-        </div>
-      </div>
-    );
-  };
-
-  const noResultsComponent = () => {
-    return (
-      <div className="noResultContainer">
-        <div className="internal">
-          <TextWrapper
-            text={'There are no opens loans yet.'}
-            fontSize={24}
-            fontWeight={'bold'}
-            className="m-b-8"
-          />
-        </div>
-      </div>
-    );
-  };
-
   return (
     <React.Fragment>
       <div className={classes.root} style={{position: 'relative'}}>
@@ -204,25 +167,20 @@ const AllLoansTable = (props: Props) => {
           getRowId={(rows) => {
             return rows.id;
           }}
-          pagination
-          rows={props.value.data}
+          // pagination
+          rows={props.value}
           columns={columns}
-          pageSize={PAGINATION_PAGE_SIZE}
-          rowCount={10}
-          paginationMode="server"
-          onRowClick={(newSelection) => {
-            // window.open(`/#/loan/details/${newSelection.row.owner}/${newSelection.row.token}`);
-          }}
+          // pageSize={PAGINATION_PAGE_SIZE}
+          rowCount={5}
+          // paginationMode="server"
           rowHeight={84}
-          loading={false}
-          onPageChange={(newPage) => {
+          /*onPageChange={(newPage) => {
             setPageNo(Number(newPage) || 0);
-          }}
+          }}*/
+          onRowClick={(data) => console.log('data', data)}
           autoHeight={true}
           disableColumnMenu={true}
           components={{
-            LoadingOverlay: LoadingOverlayComponent,
-            NoRowsOverlay: noResultsComponent,
             ColumnSortedDescendingIcon: SortedDescendingIcon,
             ColumnSortedAscendingIcon: SortedAscendingIcon,
           }}
@@ -234,4 +192,4 @@ const AllLoansTable = (props: Props) => {
   );
 };
 
-export default AllLoansTable;
+export default AllPositionData;

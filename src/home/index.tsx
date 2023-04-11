@@ -1,17 +1,23 @@
 import React from "react";
 import useGetPositionHF from "../hooks/state/useGetPositionsHF";
-import useGetV3UnhealthyPosition from "../hooks/state/useGetV3UnhealthyPosition";
+import {getDisplayBalance} from "../utils/formatBalance";
+import {IUserDataWithHF} from "../utils/interface";
 import PositionsData from "./component/PositionsData";
 import './index.css'
 
 const Home = () => {
   const position = useGetPositionHF();
-  const temp = useGetV3UnhealthyPosition();
 
   return (
     <div id={'app'}>
       <div className={'material-primary'}>
-        <PositionsData value={position}/>
+        {position.isLoading
+          ? <p>Fetching position this might take several minutes</p>
+          : position.data.length === 0 && !position.isLoading
+            ? <p>No position found</p>
+            : <PositionsData value={position.data.sort((a: IUserDataWithHF, b: IUserDataWithHF) => {
+              return Number(getDisplayBalance(a.hf)) - Number(getDisplayBalance(b.hf))
+            })}/>}
       </div>
     </div>
   )

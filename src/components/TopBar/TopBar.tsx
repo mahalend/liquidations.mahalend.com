@@ -29,14 +29,6 @@ const TopBar: React.FC = () => {
                 <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'}/>
               </div>
               <div className="single-line-center-start">
-                {
-                  !!account &&
-                    <IconLoader
-                      iconName={'Transaction'}
-                      className={'pointer m-r-12'}
-                      onClick={() => setShowTxModal(true)}
-                    />
-                }
                 <ConnectButton/>
               </div>
             </div>

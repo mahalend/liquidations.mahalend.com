@@ -20,18 +20,19 @@ const useGetPositionHF = () => {
   const { address: account } = useAccount();
 
   const chainId = useGetChainId();
-  const contract = core?.getPoolContract(chainId);
-  const v3Positon = useGetV3UnhealthyPosition();
+  const v3Position = useGetV3UnhealthyPosition('');
 
   const fetchData = useCallback(async () => {
-    if (v3Positon.isLoading || v3Positon.data.length === 0) {
+    const contract = core?.getPoolContract(chainId);
+    if (v3Position.isLoading || v3Position.data.length === 0 || contract === undefined) {
       setValue({isLoading: false, data: []});
       return;
     }
 
-    const v3PositonsWithHf = await Promise.all(
-      v3Positon.data.map(async (data) => {
-        const response = await contract.getUserAccountData();
+
+    const v3PositionsWithHf = await Promise.all(
+      v3Position.data.map(async (data) => {
+        const response = await contract.getUserAccountData(data.id);
         const factor: BigNumber = response.healthFactor;
 
         return {
@@ -42,9 +43,9 @@ const useGetPositionHF = () => {
 
     setValue({
       isLoading: false,
-      data: v3PositonsWithHf,
+      data: v3PositionsWithHf,
     });
-  }, [account, contract]);
+  }, [v3Position.data.length]);
 
   useEffect(() => {
     if (core) {
@@ -55,7 +56,7 @@ const useGetPositionHF = () => {
         );
       });
     }
-  }, [setValue, core, account, fetchData]);
+  }, [core, fetchData]);
 
   return value;
 };

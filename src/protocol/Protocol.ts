@@ -109,7 +109,7 @@ export class Protocol {
     return this._config[chainId][id];
   }
 
-  getPoolContract(chainId: number) {
+  getPoolContract(chainId: number): Contract {
     return this._contracts[chainId]['Pool']
   }
 }
