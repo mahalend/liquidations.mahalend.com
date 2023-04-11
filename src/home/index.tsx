@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div id={'app'}>
-      <div className={'material-primary'}>
+      <div className={'p-l-24 p-r-24'}>
         {position.isLoading
           ? <p>Fetching position this might take several minutes</p>
           : position.data.length === 0 && !position.isLoading
