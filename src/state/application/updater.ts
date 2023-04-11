@@ -52,7 +52,7 @@ export default function Updater(): null {
     return () => {
       provider.removeListener('block', blockNumberCallback);
     };
-  }, [dispatch, chainId, window.ethereum, blockNumberCallback, windowVisible]);
+  }, [dispatch, chainId, blockNumberCallback, windowVisible]);
 
   const debouncedState = useDebounce(state, 100);
 

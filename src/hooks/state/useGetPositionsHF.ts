@@ -45,7 +45,7 @@ const useGetPositionHF = () => {
       isLoading: false,
       data: v3PositionsWithHf,
     });
-  }, [v3Position.data.length]);
+  }, [chainId, core, v3Position.data, v3Position.isLoading]);
 
   useEffect(() => {
     if (core) {
