@@ -1,3 +1,4 @@
+import exp from "constants";
 import {BigNumber} from "ethers";
 import Protocol from "../protocol";
 
@@ -121,4 +122,49 @@ export interface SerializableTransactionReceipt {
 
 export interface ProtocolContext {
   core: Protocol;
+}
+
+export interface IUserCollateralReserve {
+  currentATokenBalance: string;
+  reserve: {
+    usageAsCollateralEnabled: boolean
+    reserveLiquidationThreshold: string;
+    reserveLiquidationBonus: string;
+    borrowingEnabled: boolean;
+    utilizationRate: string;
+    symbol: string;
+    underlyingAsset: string;
+    isPaused: boolean;
+    price: {
+      priceInEth: string
+    }
+    decimals: number
+  }
+}
+
+export interface IUserBorrowReserve {
+  currentTotalDebt: string;
+  reserve: {
+    usageAsCollateralEnabled: boolean
+    reserveLiquidationThreshold: string
+    borrowingEnabled: boolean
+    utilizationRate: string;
+    symbol: string;
+    underlyingAsset: string;
+    price: {
+      priceInEth: string
+    }
+    decimals: number
+  }
+}
+
+export interface IUserData {
+  id: string
+  borrowedReservesCount: number
+  collateralReserve: IUserCollateralReserve[]
+  borrowReserve: IUserBorrowReserve[]
+}
+
+export interface IUserDataWithHF extends IUserData {
+  hf: BigNumber;
 }

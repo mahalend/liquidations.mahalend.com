@@ -6,5 +6,9 @@
   "MAHA": {
     "abi": "IERC20",
     "address": "0x745407c86df8db893011912d3ab28e68b62e49b0"
+  },
+  "Pool": {
+    "abi": "IPool",
+    "address": "0x76F0C94Ced5B48020bf0D7f3D0CEabC877744cB5"
   }
 }

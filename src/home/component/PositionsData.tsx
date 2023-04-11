@@ -6,11 +6,9 @@ import '../../customCss/Custom-Mahadao-Data-Table.css';
 import TextWrapper from "../../components/TextWrapper";
 import {truncateMiddle} from "../../utils";
 
-import {Mixpanel} from "../../analytics/Mixpanel";
 import IconLoader from "../../components/IconLoader";
 import config from "../../config";
-import {IUserBorrowReserve, IUserCollateralReserve, IUserData} from "../../hooks/state/useGetV3UnhealthyPosition";
-import {convertBigIntToNumber, getDisplayBalance} from "../../utils/formatBalance";
+import {IUserBorrowReserve, IUserCollateralReserve, IUserData, IUserDataWithHF} from "../../utils/interface";
 import {useGetChainId} from "../../utils/NetworksCustomHooks";
 
 export function SortedDescendingIcon() {
@@ -49,7 +47,7 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  value: {isLoading: boolean; data: IUserData[]};
+  value: {isLoading: boolean; data: IUserDataWithHF[]};
 };
 
 const PAGINATION_PAGE_SIZE = 5
