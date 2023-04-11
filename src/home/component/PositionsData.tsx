@@ -2,10 +2,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
 import {BigNumber} from "ethers";
 import React, {useState} from 'react';
-import {ro} from "timeago.js/lib/lang";
 
 import IconLoader from "../../components/IconLoader";
-import TextWrapper from "../../components/TextWrapper";
 import '../../customCss/Custom-Mahadao-Data-Table.css';
 import config from "../../config";
 import {getDisplayBalance} from "../../utils/formatBalance";
