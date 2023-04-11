@@ -1,6 +1,6 @@
 import React from "react";
-import TxModal from './TxModal';
 import Modal from "../../components/Modal";
+import TxModal from "./TxModal";
 
 interface Iprops {
   openModal: boolean;
@@ -8,21 +8,15 @@ interface Iprops {
 }
 
 const DesktopTransactionInfo = (props: Iprops) => {
-  const {
-    openModal,
-    onDismiss,
-  } = props;
+  const { openModal, onDismiss } = props;
 
   if (!openModal) return null;
 
   return (
-    <Modal
-      open={openModal}
-      handleClose={() => onDismiss()}
-    >
-      <TxModal openModal={openModal} onDismiss={() => onDismiss()}/>
+    <Modal open={openModal} handleClose={() => onDismiss()}>
+      <TxModal openModal={openModal} onDismiss={() => onDismiss()} />
     </Modal>
-  )
+  );
 };
 
 export default DesktopTransactionInfo;

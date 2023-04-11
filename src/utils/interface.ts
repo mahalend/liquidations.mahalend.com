@@ -1,5 +1,4 @@
-import exp from "constants";
-import {BigNumber} from "ethers";
+import { BigNumber } from "ethers";
 import Protocol from "../protocol";
 
 export type BasicState = {
@@ -127,7 +126,7 @@ export interface ProtocolContext {
 export interface IUserCollateralReserve {
   currentATokenBalance: string;
   reserve: {
-    usageAsCollateralEnabled: boolean
+    usageAsCollateralEnabled: boolean;
     reserveLiquidationThreshold: string;
     reserveLiquidationBonus: string;
     borrowingEnabled: boolean;
@@ -136,33 +135,33 @@ export interface IUserCollateralReserve {
     underlyingAsset: string;
     isPaused: boolean;
     price: {
-      priceInEth: string
-    }
-    decimals: number
-  }
+      priceInEth: string;
+    };
+    decimals: number;
+  };
 }
 
 export interface IUserBorrowReserve {
   currentTotalDebt: string;
   reserve: {
-    usageAsCollateralEnabled: boolean
-    reserveLiquidationThreshold: string
-    borrowingEnabled: boolean
+    usageAsCollateralEnabled: boolean;
+    reserveLiquidationThreshold: string;
+    borrowingEnabled: boolean;
     utilizationRate: string;
     symbol: string;
     underlyingAsset: string;
     price: {
-      priceInEth: string
-    }
-    decimals: number
-  }
+      priceInEth: string;
+    };
+    decimals: number;
+  };
 }
 
 export interface IUserData {
-  id: string
-  borrowedReservesCount: number
-  collateralReserve: IUserCollateralReserve[]
-  borrowReserve: IUserBorrowReserve[]
+  id: string;
+  borrowedReservesCount: number;
+  collateralReserve: IUserCollateralReserve[];
+  borrowReserve: IUserBorrowReserve[];
 }
 
 export interface IUserDataWithHF extends IUserData {

@@ -1,17 +1,17 @@
-import {getDefaultWallets, RainbowKitProvider} from "@rainbow-me/rainbowkit";
+import { useMediaQuery } from "@material-ui/core";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
-import {SnackbarProvider} from "notistack";
+import { SnackbarProvider } from "notistack";
 import React from "react";
-import {Provider} from "react-redux";
-import {useMediaQuery} from "@material-ui/core";
-import {HashRouter as Router} from "react-router-dom";
-import {configureChains, createClient, WagmiConfig} from "wagmi";
-import {alchemyProvider} from 'wagmi/providers/alchemy';
-import {publicProvider} from "wagmi/providers/public";
+import { Provider } from "react-redux";
+import { HashRouter as Router } from "react-router-dom";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 import Popups from "./components/Popups";
 import TopBar from "./components/TopBar";
 import Tracking from "./components/Tracking";
-import {ConfigChains} from "./config";
+import { ConfigChains } from "./config";
 import ProtocolProvider from "./context/Provider";
 
 import "./index.css";
@@ -19,21 +19,19 @@ import Navigation from "./Navigation";
 
 import store from "./state";
 import Updaters from "./state/Updaters";
-import {myCustomTheme} from "./theme/rainbowKitCustomTheme";
+import { myCustomTheme } from "./theme/rainbowKitCustomTheme";
 
 interface IProps {
   children: React.ReactNode;
 }
 
 const RainbowProvider = (props: IProps) => {
-  const {chains, provider} = configureChains(
-    ConfigChains,
-    [
-      alchemyProvider({apiKey: 'HY3urTDGBnhgqGXmCsjPEzyiVSY3NLh8'}),
-      publicProvider()]
-  );
+  const { chains, provider } = configureChains(ConfigChains, [
+    alchemyProvider({ apiKey: "HY3urTDGBnhgqGXmCsjPEzyiVSY3NLh8" }),
+    publicProvider(),
+  ]);
 
-  const {connectors} = getDefaultWallets({
+  const { connectors } = getDefaultWallets({
     appName: "Mahalend",
     chains,
   });
@@ -63,11 +61,11 @@ const Providers = (props: IProps) => {
       <RainbowProvider>
         <ProtocolProvider>
           <SnackbarProvider
-            anchorOrigin={{vertical: "top", horizontal: "right"}}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
             maxSnack={2}
           >
             <>
-              <Popups/>
+              <Popups />
               {props.children}
             </>
           </SnackbarProvider>
@@ -85,10 +83,10 @@ const App = () => {
   return (
     <Providers>
       <Router>
-        <TopBar/>
-        <Updaters/>
-        <Navigation/>
-        <Tracking/>
+        <TopBar />
+        <Updaters />
+        <Navigation />
+        <Tracking />
       </Router>
     </Providers>
   );

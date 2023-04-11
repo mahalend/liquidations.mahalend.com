@@ -1,6 +1,6 @@
 import React from "react";
 import { useActivePopups } from "../../state/application/hooks";
-import {PopupContent} from "../../utils/interface";
+import { PopupContent } from "../../utils/interface";
 
 import TransactionSnackbar from "./TransactionSnackbar";
 
@@ -9,7 +9,7 @@ export default function Popups() {
 
   return (
     <>
-      {activePopups.map((p: {content: PopupContent}, i: number) => (
+      {activePopups.map((p: { content: PopupContent }, i: number) => (
         <TransactionSnackbar
           key={i}
           index={i}

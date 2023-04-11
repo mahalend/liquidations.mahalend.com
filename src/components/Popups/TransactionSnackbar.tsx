@@ -9,7 +9,7 @@ import config from "../../config";
 
 import "../../customCss/Custom-Snackbar.css";
 import { PopupContent } from "../../utils/interface";
-import {useGetChainId} from "../../utils/NetworksCustomHooks";
+import { useGetChainId } from "../../utils/NetworksCustomHooks";
 
 import IconLoader from "../IconLoader";
 

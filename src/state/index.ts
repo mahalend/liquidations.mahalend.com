@@ -1,12 +1,12 @@
-import {createLogger} from 'redux-logger';
-import {load, save} from 'redux-localstorage-simple';
-import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { load, save } from "redux-localstorage-simple";
+import { createLogger } from "redux-logger";
 
-import {isProduction} from "../analytics/Mixpanel";
-import application from './application/reducer';
-import transactions from './transactions/reducer';
+import { isProduction } from "../analytics/Mixpanel";
+import application from "./application/reducer";
+import transactions from "./transactions/reducer";
 
-const PERSISTED_KEYS: string[] = ['transactions', 'slippage'];
+const PERSISTED_KEYS: string[] = ["transactions", "slippage"];
 
 const store = configureStore({
   reducer: {
@@ -15,16 +15,15 @@ const store = configureStore({
   },
   middleware: isProduction
     ? [
-      ...getDefaultMiddleware({serializableCheck: false, thunk: false}),
-      save({states: PERSISTED_KEYS}),
-    ]
+        ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
+        save({ states: PERSISTED_KEYS }),
+      ]
     : [
-      ...getDefaultMiddleware({serializableCheck: false, thunk: false}),
-      save({states: PERSISTED_KEYS}),
-      createLogger(),
-    ]
-  ,
-  preloadedState: load({states: PERSISTED_KEYS}),
+        ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
+        save({ states: PERSISTED_KEYS }),
+        createLogger(),
+      ],
+  preloadedState: load({ states: PERSISTED_KEYS }),
 });
 
 export default store;

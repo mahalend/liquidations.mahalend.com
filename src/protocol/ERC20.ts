@@ -1,10 +1,10 @@
-import {BigNumber, Contract} from 'ethers';
-import {formatUnits} from 'ethers/lib/utils';
-import {Signer} from '@ethersproject/abstract-signer';
-import {Provider} from '@ethersproject/abstract-provider';
-import {TransactionResponse} from '@ethersproject/providers';
+import { Provider } from "@ethersproject/abstract-provider";
+import { Signer } from "@ethersproject/abstract-signer";
+import { TransactionResponse } from "@ethersproject/providers";
+import { BigNumber, Contract } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 
-import ABIS from './deployments/abi';
+import ABIS from "./deployments/abi";
 
 class ERC20 {
   symbol: string;
@@ -12,7 +12,12 @@ class ERC20 {
   decimal: number;
   protected contract: Contract;
 
-  constructor(address: string, provider: Signer | Provider, symbol: string, decimal = 18) {
+  constructor(
+    address: string,
+    provider: Signer | Provider,
+    symbol: string,
+    decimal = 18
+  ) {
     this.contract = new Contract(address, ABIS.IERC20, provider);
     this.address = address;
     this.symbol = symbol;
@@ -50,7 +55,7 @@ class ERC20 {
   transferFrom(
     sender: string,
     recipient: string,
-    amount: BigNumber,
+    amount: BigNumber
   ): Promise<TransactionResponse> {
     return this.contract.transferFro(sender, recipient, amount);
   }

@@ -1,41 +1,55 @@
-import {ConnectButton} from "@rainbow-me/rainbowkit";
-import React, {useState} from 'react';
-import {useMediaQuery} from "@material-ui/core";
-import styled from 'styled-components';
-
-import {useGetAccount} from "../../utils/NetworksCustomHooks";
-
-import IconLoader from "../IconLoader";
+import { useMediaQuery } from "@material-ui/core";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useState } from "react";
+import styled from "styled-components";
 import DesktopTransactionInfo from "../../modals/Transaction/DesktopTransactionInfo";
 import MobileTransactionInfo from "../../modals/Transaction/MobileTransactionInfo";
 
+import { useGetAccount } from "../../utils/NetworksCustomHooks";
+
+import IconLoader from "../IconLoader";
+
 const TopBar: React.FC = () => {
-  const account = useGetAccount()
-  const isMobile = useMediaQuery('');
+  const account = useGetAccount();
+  const isMobile = useMediaQuery("");
   const [showTxModal, setShowTxModal] = useState<boolean>(false);
 
   return (
     <TopBarContainer>
-      {
-        isMobile
-          ? <MobileTransactionInfo openModal={showTxModal} onDismiss={() => setShowTxModal(false)}/>
-          : <DesktopTransactionInfo openModal={showTxModal} onDismiss={() => setShowTxModal(false)}/>
-      }
+      {isMobile ? (
+        <MobileTransactionInfo
+          openModal={showTxModal}
+          onDismiss={() => setShowTxModal(false)}
+        />
+      ) : (
+        <DesktopTransactionInfo
+          openModal={showTxModal}
+          onDismiss={() => setShowTxModal(false)}
+        />
+      )}
       <StyledTopBar>
         <StyledTopBarInner>
           <HideonPhone>
             <div className="single-line-center-between">
               <div className="dialog-class">
-                <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'}/>
+                <IconLoader
+                  iconName={"Mahalg"}
+                  iconType={"brandLogo"}
+                  onClick={() => (window.location.href = "/#/")}
+                />
               </div>
               <div className="single-line-center-start">
-                <ConnectButton/>
+                <ConnectButton />
               </div>
             </div>
           </HideonPhone>
           <HideOnBigScreen>
             <div className="single-line-center-between">
-              <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'}/>
+              <IconLoader
+                iconName={"Mahalg"}
+                iconType={"brandLogo"}
+                onClick={() => (window.location.href = "/#/")}
+              />
             </div>
           </HideOnBigScreen>
         </StyledTopBarInner>
@@ -58,7 +72,7 @@ const HideonPhone = styled.div`
   display: block;
   @media (max-width: 600px) {
     display: none;
-  };
+  }
 `;
 
 const HideOnBigScreen = styled.div`
@@ -66,7 +80,7 @@ const HideOnBigScreen = styled.div`
   display: none;
   @media (max-width: 600px) {
     display: block;
-  };
+  }
 `;
 
 const StyledTopBar = styled.div`

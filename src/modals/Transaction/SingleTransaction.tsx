@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import {format} from 'timeago.js';
+import React from "react";
+import styled from "styled-components";
+import { format } from "timeago.js";
+import IconLoader from "../../components/IconLoader";
 
 import config from "../../config";
-import {TransactionDetails} from "../../state/transactions/reducer";
-import IconLoader from "../../components/IconLoader";
+import { TransactionDetails } from "../../state/transactions/reducer";
 
 const TransactionWrapper = styled.div`
   display: flex;
@@ -12,12 +12,13 @@ const TransactionWrapper = styled.div`
 `;
 
 const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
-  color: ${({pending, success, theme}) =>
+  color: ${({ pending, success, theme }) =>
     pending ? theme.primary1 : success ? theme.green1 : theme.red1};
 `;
 
 const StateWrapper = styled.div<{ pending: boolean; success?: boolean }>`
-  color: ${({pending, success}) => (pending ? '#FCB400' : success ? '#00000000' : '#FA4C69')};
+  color: ${({ pending, success }) =>
+    pending ? "#FCB400" : success ? "#00000000" : "#FA4C69"};
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -29,32 +30,37 @@ interface TransactionProps {
   chainId: number;
 }
 
-const SingleTransaction: React.FC<TransactionProps> = ({tx, chainId}) => {
+const SingleTransaction: React.FC<TransactionProps> = ({ tx, chainId }) => {
   const summary = tx.summary;
   const pending = !tx.receipt;
   const success =
-    !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined');
+    !pending &&
+    tx &&
+    (tx.receipt?.status === 1 || typeof tx.receipt?.status === "undefined");
   const date = tx?.confirmedTime || tx?.addedTime;
 
   return (
     <TransactionWrapper>
       <IconWrapper pending={pending} success={success}>
         {pending ? (
-          <IconLoader iconName={'ColoredPending'} iconType={'status'}/>
+          <IconLoader iconName={"ColoredPending"} iconType={"status"} />
         ) : success ? (
-          <IconLoader iconName={'ColoredSuccess'} iconType={'status'}/>
+          <IconLoader iconName={"ColoredSuccess"} iconType={"status"} />
         ) : (
-          <IconLoader iconName={'ColoredAlert'} iconType={'status'}/>
+          <IconLoader iconName={"ColoredAlert"} iconType={"status"} />
         )}
       </IconWrapper>
       <InfoSection>
-        <Title href={`${config[chainId].etherscanUrl}/tx/${tx.hash}`} target="_blank">
+        <Title
+          href={`${config[chainId].etherscanUrl}/tx/${tx.hash}`}
+          target="_blank"
+        >
           {summary ?? tx.hash}
         </Title>
         <Date>{format(date)}</Date>
       </InfoSection>
       <StateWrapper pending={pending} success={success}>
-        {pending ? 'Pending' : success ? '' : 'Failed'}
+        {pending ? "Pending" : success ? "" : "Failed"}
       </StateWrapper>
     </TransactionWrapper>
   );

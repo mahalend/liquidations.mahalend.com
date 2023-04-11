@@ -1,11 +1,14 @@
-import {ethers} from 'ethers';
+import { ethers } from "ethers";
+import { web3ProviderFrom } from "./etherUtils";
 
-import {Configuration} from './interface';
-import {web3ProviderFrom} from './etherUtils';
+import { Configuration } from "./interface";
 
-export function getDefaultProvider(config: Configuration): ethers.providers.BaseProvider {
+export function getDefaultProvider(
+  config: Configuration
+): ethers.providers.BaseProvider {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const _window: { ethereum?: any, web3?: any } = window;
+  const _window: { ethereum?: any; web3?: any } = window;
 
   // Modern dapp browsers.
   if (_window.ethereum) {
@@ -30,7 +33,9 @@ export function getDefaultProvider(config: Configuration): ethers.providers.Base
   return new ethers.providers.JsonRpcProvider(config.defaultProvider);
 }
 
-export function getGanacheProvider(config: Configuration): ethers.providers.JsonRpcProvider {
+export function getGanacheProvider(
+  config: Configuration
+): ethers.providers.JsonRpcProvider {
   return new ethers.providers.JsonRpcProvider(
     web3ProviderFrom(config.defaultProvider),
     config.chainId

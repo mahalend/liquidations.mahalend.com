@@ -1,30 +1,28 @@
-import React, {useMemo, useState} from 'react';
-import {Link} from 'react-router-dom';
-import styled from 'styled-components';
-
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
+import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import IconLoader from "../../components/IconLoader";
 
 import {
   isTransactionRecent,
   useAllTransactions,
-  useClearAllTransactions
 } from "../../state/transactions/hooks";
-import {TransactionDetails} from "../../state/transactions/reducer";
-import {useGetAccount, useGetChainId} from "../../utils/NetworksCustomHooks";
+import { TransactionDetails } from "../../state/transactions/reducer";
+import { useGetAccount, useGetChainId } from "../../utils/NetworksCustomHooks";
 
-import SingleTransaction from './SingleTransaction';
-import IconLoader from "../../components/IconLoader";
+import SingleTransaction from "./SingleTransaction";
 
 interface props {
   openModal: boolean;
   onDismiss: () => void;
 }
 
-const TxModal: React.FC<props> = ({openModal, onDismiss}) => {
+const TxModal: React.FC<props> = ({ openModal, onDismiss }) => {
   const account = useGetAccount();
 
   const allTransactions = useAllTransactions();
-  const chainId = useGetChainId()
+  const chainId = useGetChainId();
 
   const sortedRecentTransactions = useMemo(() => {
     const txs = Object.values(allTransactions);
@@ -46,7 +44,7 @@ const TxModal: React.FC<props> = ({openModal, onDismiss}) => {
         <RightSubHeader>
           <CrossIcon>
             <IconButton aria-label="close" onClick={() => handleClose()}>
-              <IconLoader iconName={'Cross'} width={24}/>
+              <IconLoader iconName={"Cross"} width={24} />
             </IconButton>
           </CrossIcon>
         </RightSubHeader>
@@ -55,14 +53,14 @@ const TxModal: React.FC<props> = ({openModal, onDismiss}) => {
         {sortedRecentTransactions.length === 0 && (
           <div>
             <NoTransaction>You haven’t done any transaction yet.</NoTransaction>
-            <CallToAction to={'/farming'} onClick={() => handleClose()}>
+            <CallToAction to={"/farming"} onClick={() => handleClose()}>
               Farm and earn rewards
             </CallToAction>
           </div>
         )}
         <StyledTransactionList>
           {sortedRecentTransactions.map((tx) => (
-            <SingleTransaction key={tx.hash} tx={tx} chainId={chainId}/>
+            <SingleTransaction key={tx.hash} tx={tx} chainId={chainId} />
           ))}
         </StyledTransactionList>
       </ModalBody>

@@ -1,14 +1,21 @@
-import {useCallback, useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useGetChainId} from "../../utils/NetworksCustomHooks";
+import { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { PopupContent } from "../../utils/interface";
+import { useGetChainId } from "../../utils/NetworksCustomHooks";
+import { AppState } from "../index";
 
-import {addPopup, removePopup, toggleSettingsMenu, toggleWalletModal,} from './actions';
-import {AppState} from '../index';
-import {PopupContent} from '../../utils/interface';
+import {
+  addPopup,
+  removePopup,
+  toggleSettingsMenu,
+  toggleWalletModal,
+} from "./actions";
 
 export function useBlockNumber(): number | undefined {
-  const chainId = useGetChainId()
-  return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1]);
+  const chainId = useGetChainId();
+  return useSelector(
+    (state: AppState) => state.application.blockNumber[chainId ?? -1]
+  );
 }
 
 export function useWalletModalOpen(): boolean {
@@ -35,9 +42,9 @@ export function useAddPopup(): (content: PopupContent, key?: string) => void {
 
   return useCallback(
     (content: PopupContent, key?: string) => {
-      dispatch(addPopup({content, key}));
+      dispatch(addPopup({ content, key }));
     },
-    [dispatch],
+    [dispatch]
   );
 }
 
@@ -46,14 +53,14 @@ export function useRemovePopup(): (key: string) => void {
   const dispatch = useDispatch();
   return useCallback(
     (key: string) => {
-      dispatch(removePopup({key}));
+      dispatch(removePopup({ key }));
     },
-    [dispatch],
+    [dispatch]
   );
 }
 
 // Get the list of active popups.
-export function useActivePopups(): AppState['application']['popupList'] {
+export function useActivePopups(): AppState["application"]["popupList"] {
   const list = useSelector((state: AppState) => state.application.popupList);
   return useMemo(() => list.filter((item: any) => item.show), [list]);
 }
