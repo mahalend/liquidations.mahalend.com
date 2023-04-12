@@ -11,11 +11,9 @@ import ERC20 from "./ERC20";
  * All contract-interacting domain logic should be defined in here.
  */
 export class Protocol {
-  // @ts-ignore
-  myAccount: string;
+  myAccount: string | undefined;
 
-  // @ts-ignore
-  web3: Web3;
+  web3: Web3 | undefined;
 
   _signer?: ethers.Signer;
 
@@ -27,8 +25,7 @@ export class Protocol {
     [chainId: number]: { [name: string]: Contract };
   };
 
-  // @ts-ignore
-  provider: ethers.providers.BaseProvider;
+  provider: ethers.providers.BaseProvider | undefined;
 
   _tokens: {
     [chainId: number]: { [name: string]: ERC20 };
@@ -85,7 +82,6 @@ export class Protocol {
    * @param account An address of unlocked wallet account.
    */
   unlockWallet(provider: any, account: string) {
-    // @ts-ignore
     const newProvider = new ethers.providers.Web3Provider(provider);
     this.web3 = new Web3(provider);
     this.provider = newProvider;

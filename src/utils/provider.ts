@@ -6,8 +6,6 @@ import { Configuration } from "./interface";
 export function getDefaultProvider(
   config: Configuration
 ): ethers.providers.BaseProvider {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const _window: { ethereum?: any; web3?: any } = window;
 
   // Modern dapp browsers.

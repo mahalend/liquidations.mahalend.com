@@ -11,7 +11,7 @@ import {
   WithStyles,
 } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import IconLoader from "../IconLoader";
 import TextWrapper from "../TextWrapper";
@@ -38,14 +38,13 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
   titleLogo?: React.ReactNode;
   children: React.ReactNode;
   onClose: () => void;
-  modalTitleStyle?: any;
+  modalTitleStyle?: CSSProperties | undefined;
   closeButton?: boolean;
   title: string;
 }
 
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const {
-    children,
     classes,
     onClose,
     titleLogo,
@@ -107,12 +106,12 @@ const DialogContent = withStyles(() => ({
 interface props {
   children: React.ReactNode;
   title?: string;
-  handleClose?: Function;
+  handleClose?: () => void;
   open?: boolean;
   titleLogo?: React.ReactNode;
-  modalContainerStyle?: any;
-  modalTitleStyle?: any;
-  modalBodyStyle?: any;
+  modalContainerStyle?: CSSProperties | undefined;
+  modalTitleStyle?: CSSProperties | undefined;
+  modalBodyStyle?: CSSProperties | undefined;
   closeButton?: boolean;
   mobile?: boolean;
 }

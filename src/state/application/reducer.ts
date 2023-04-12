@@ -1,5 +1,6 @@
 import { createReducer, nanoid } from "@reduxjs/toolkit";
 import { INITIAL_APP_STATE } from "../../utils/constants";
+import { PopupListItem } from "../../utils/interface";
 
 import {
   addPopup,
@@ -46,7 +47,7 @@ export default createReducer(INITIAL_APP_STATE, (builder) =>
       }
     )
     .addCase(removePopup, (state, { payload: { key } }) => {
-      state.popupList.forEach((p: any) => {
+      state.popupList.forEach((p: PopupListItem) => {
         if (p.key === key) {
           p.show = false;
         }

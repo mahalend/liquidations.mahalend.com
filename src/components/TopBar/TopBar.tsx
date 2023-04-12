@@ -5,12 +5,9 @@ import styled from "styled-components";
 import DesktopTransactionInfo from "../../modals/Transaction/DesktopTransactionInfo";
 import MobileTransactionInfo from "../../modals/Transaction/MobileTransactionInfo";
 
-import { useGetAccount } from "../../utils/NetworksCustomHooks";
-
 import IconLoader from "../IconLoader";
 
 const TopBar: React.FC = () => {
-  const account = useGetAccount();
   const isMobile = useMediaQuery("");
   const [showTxModal, setShowTxModal] = useState<boolean>(false);
 

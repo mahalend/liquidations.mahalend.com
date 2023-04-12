@@ -77,12 +77,14 @@ export type PopupContent = {
   };
 };
 
-export type PopupList = Array<{
+export type PopupListItem = {
   key: string;
   show: boolean;
   content: PopupContent;
   removeAfterMs: number | null;
-}>;
+}
+
+export type PopupList = Array<PopupListItem>;
 
 export interface ApplicationState {
   blockNumber: { [chainId: number]: number };

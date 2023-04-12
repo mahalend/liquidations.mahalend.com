@@ -6,14 +6,13 @@ import Protocol from "../../protocol";
 import { useGetAccount, useGetChainId } from "../../utils/NetworksCustomHooks";
 
 export interface ProtocolContext {
-  core: Protocol;
+  core: Protocol | undefined | null;
 }
 
-// @ts-ignore
 export const Context = createContext<ProtocolContext>({ core: null });
 
 interface IProps {
-  children: any;
+  children: React.ReactNode;
 }
 
 export const ProtocolProvider = (props: IProps) => {
@@ -35,6 +34,5 @@ export const ProtocolProvider = (props: IProps) => {
     }
   }, [account, core, dispatch, chainId]);
 
-  // @ts-ignore
   return <Context.Provider value={{ core }}>{children}</Context.Provider>;
 };
