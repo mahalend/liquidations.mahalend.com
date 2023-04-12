@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[6261],{76261:function(a,e,c){a.exports=c.p+"static/media/PancakeSwap.2f884ffc8c96cfa1e28e.svg"}}]);

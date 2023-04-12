@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[1765],{61765:function(a,c,e){a.exports=e.p+"static/media/CosmicFinance.d60a718a7c135bf6317f.svg"}}]);

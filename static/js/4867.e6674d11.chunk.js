@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[4867],{44867:function(a,e,c){a.exports=c.p+"static/media/ArrowDown.39bcafc5aa8dff73abee.svg"}}]);
