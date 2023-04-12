@@ -10,35 +10,7 @@ export interface ITrackingParams {
   skin?: string;
 }
 
-export type trackingIds =
-  | "join-discord"
-  | "utilities"
-  | "explore-nft"
-  | "fuse-nft"
-  | "buy-from-kucoin"
-  | "buy-from-uniswap"
-  | "nft-item"
-  | "unstake-nft"
-  | "stake-nft"
-  | "view-on-opensea"
-  | "view-profile"
-  | "mint-nft"
-  | "minted-nft-share-on-twitter"
-  | "profile"
-  | "brand-identity"
-  | "brand-name"
-  | "mahadao"
-  | "get-citizenship"
-  | "mint-with-maha"
-  | "mint-with-eth"
-  | "approve-maha"
-  | "faq"
-  | "free-mint"
-  | "minted-nft-view-on-opensea"
-  | "choose-traits"
-  | "choose-traits-modal"
-  | "change-pfp"
-  | "check-history";
+export type trackingIds = "liquidate";
 
 interface IProps {
   trackingid: trackingIds;

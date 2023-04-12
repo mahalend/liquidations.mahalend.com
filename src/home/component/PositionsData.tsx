@@ -1,11 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridCellParams } from "@material-ui/data-grid";
 import { BigNumber } from "ethers";
 import React, { useState } from "react";
+import Button from "../../components/Button";
 
 import IconLoader from "../../components/IconLoader";
 import config from "../../config";
 import "../../customCss/Custom-Mahadao-Data-Table.css";
+import { truncateMiddle } from "../../utils";
 import { getDisplayBalance } from "../../utils/formatBalance";
 import {
   IUserBorrowReserve,
@@ -66,7 +68,9 @@ const AllPositionData = (props: Props) => {
     setPageNo(0);
   }, [props.data]);*/
 
-  const handleLiquidate = (symbol: string, borrower: string) => {};
+  const handleLiquidate = (user: string) => {
+    console.log("data", user, pageNo, noOfSize);
+  };
 
   const columns = [
     {
@@ -74,19 +78,17 @@ const AllPositionData = (props: Props) => {
       headerName: "OWNER",
       flex: 0.3,
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div
             className="single-line-center-start"
             onClick={() =>
               window.open(
-                `${config[chainId].etherscanUrl}/address/${params.value}`
+                `${config[chainId].etherscanUrl}/address/${params.row.id}`
               )
             }
           >
-            {params.value}
-            {/*{truncateMiddle(params.value, 15)}*/}
-            <IconLoader iconName={"ArrowLink"} iconType={"arrow"} />
+            {truncateMiddle(params.row.id, 15)}
           </div>
         );
       },
@@ -96,20 +98,22 @@ const AllPositionData = (props: Props) => {
       headerName: "COLLATERAL",
       flex: 0.2,
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div className={"start-center"}>
-            {params.value.map((data: IUserCollateralReserve, index: number) => {
-              return (
-                <div key={index}>
-                  {getDisplayBalance(
-                    BigNumber.from(data.currentATokenBalance),
-                    data.reserve.decimals
-                  )}{" "}
-                  {data.reserve.symbol}
-                </div>
-              );
-            })}
+            {params.row.collateralReserve.map(
+              (data: IUserCollateralReserve, index: number) => {
+                return (
+                  <div key={index}>
+                    {getDisplayBalance(
+                      BigNumber.from(data.currentATokenBalance),
+                      data.reserve.decimals
+                    )}{" "}
+                    {data.reserve.symbol}
+                  </div>
+                );
+              }
+            )}
           </div>
         );
       },
@@ -119,20 +123,22 @@ const AllPositionData = (props: Props) => {
       headerName: "BORROW",
       flex: 0.23,
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div className={"start-center"}>
-            {params.value.map((data: IUserBorrowReserve, index: number) => {
-              return (
-                <div key={index}>
-                  {getDisplayBalance(
-                    BigNumber.from(data.currentTotalDebt),
-                    data.reserve.decimals
-                  )}{" "}
-                  {data.reserve.symbol}
-                </div>
-              );
-            })}
+            {params.row.borrowReserve.map(
+              (data: IUserBorrowReserve, index: number) => {
+                return (
+                  <div key={index}>
+                    {getDisplayBalance(
+                      BigNumber.from(data.currentTotalDebt),
+                      data.reserve.decimals
+                    )}{" "}
+                    {data.reserve.symbol}
+                  </div>
+                );
+              }
+            )}
           </div>
         );
       },
@@ -142,29 +148,30 @@ const AllPositionData = (props: Props) => {
       headerName: "Health factor",
       flex: 0.23,
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div className={"start-center"}>
-            {Number(getDisplayBalance(params.value)).toFixed(4)}
+            {Number(getDisplayBalance(params.row.hf)).toFixed(4)}
           </div>
         );
       },
     },
-    /*{
-      field: 'delete',
-      headerName: 'LIQUIDATE',
+    {
+      field: "delete",
+      headerName: "LIQUIDATE",
       flex: 0.1,
       sortable: false,
-      renderCell: (params: any) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div
-            className={'start-center'}
+            className={"start-center"}
+            onClick={() => handleLiquidate(params.row.id)}
           >
-
+            <Button trackingid={"liquidate"}>Liquidate</Button>
           </div>
         );
       },
-    },*/
+    },
   ];
 
   return (
@@ -175,16 +182,16 @@ const AllPositionData = (props: Props) => {
           getRowId={(rows) => {
             return rows.id;
           }}
-          // pagination
+          pagination
           rows={props.value}
           columns={columns}
-          // pageSize={PAGINATION_PAGE_SIZE}
+          pageSize={PAGINATION_PAGE_SIZE}
           rowCount={5}
-          // paginationMode="server"
+          paginationMode="server"
           rowHeight={84}
-          /*onPageChange={(newPage) => {
+          onPageChange={(newPage) => {
             setPageNo(Number(newPage) || 0);
-          }}*/
+          }}
           onRowClick={(data) => console.log("data", data)}
           autoHeight={true}
           disableColumnMenu={true}

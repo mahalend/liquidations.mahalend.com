@@ -50,12 +50,12 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
   const [data, setData] = useState<IV3Positions>({ isLoading: true, data: [] });
 
   const count = 0;
-  let maxCount = 6;
+  // let maxCount = 6;
   let user_id_query = "";
 
   if (user_id) {
     user_id_query = `id: "${user_id}",`;
-    maxCount = 1;
+    // maxCount = 1;
   }
 
   const url =

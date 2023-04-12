@@ -1,7 +1,5 @@
 import React from "react";
 import useGetPositionHF from "../hooks/state/useGetPositionsHF";
-import { getDisplayBalance } from "../utils/formatBalance";
-import { IUserDataWithHF } from "../utils/interface";
 import PositionsData from "./component/PositionsData";
 import "./index.css";
 
@@ -16,16 +14,7 @@ const Home = () => {
         ) : position.data.length === 0 && !position.isLoading ? (
           <p>No position found</p>
         ) : (
-          <PositionsData
-            value={position.data.sort(
-              (a: IUserDataWithHF, b: IUserDataWithHF) => {
-                return (
-                  Number(getDisplayBalance(a.hf)) -
-                  Number(getDisplayBalance(b.hf))
-                );
-              }
-            )}
-          />
+          <PositionsData value={position.data} />
         )}
       </div>
     </div>

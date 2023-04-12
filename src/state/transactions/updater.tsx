@@ -11,7 +11,12 @@ import { checkedTransaction, finalizeTransaction } from "./actions";
 
 export function shouldCheck(
   lastBlockNumber: number,
-  tx: { addedTime: number; receipt?: {}; lastCheckedBlockNumber?: number }
+  tx: {
+    addedTime: number;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    receipt?: object;
+    lastCheckedBlockNumber?: number;
+  }
 ): boolean {
   if (tx.receipt) return false;
   if (!tx.lastCheckedBlockNumber) return true;
@@ -31,8 +36,8 @@ export function shouldCheck(
 }
 
 export default function Updater(): null {
+  // const {chainId, ethereum} = useWallet();
   const chainId = useGetChainId();
-
   const lastBlockNumber = useBlockNumber();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -40,12 +45,12 @@ export default function Updater(): null {
     (state) => state.transactions
   );
 
-  const transactions = chainId ? state[chainId] ?? {} : {};
-
   // Show d on confirm.
   const addPopup = useAddPopup();
 
   useEffect(() => {
+    const transactions = chainId ? state[chainId] ?? {} : {};
+
     if (!chainId || !window.ethereum || !lastBlockNumber) {
       return;
     }
@@ -99,7 +104,7 @@ export default function Updater(): null {
             console.error(`failed to check transaction hash: ${hash}`, error);
           });
       });
-  }, [chainId, lastBlockNumber, dispatch, addPopup]);
+  }, [chainId, lastBlockNumber, dispatch, addPopup, state]);
 
   return null;
 }

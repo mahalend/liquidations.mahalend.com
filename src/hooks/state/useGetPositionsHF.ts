@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers";
 import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { getDisplayBalance } from "../../utils/formatBalance";
 import { IUserDataWithHF } from "../../utils/interface";
 import { useGetChainId } from "../../utils/NetworksCustomHooks";
 import useCore from "../useCore";
@@ -46,9 +47,17 @@ const useGetPositionHF = () => {
       })
     );
 
+    const sortedArray = v3PositionsWithHf.sort(
+      (a: IUserDataWithHF, b: IUserDataWithHF) => {
+        return (
+          Number(getDisplayBalance(a.hf)) - Number(getDisplayBalance(b.hf))
+        );
+      }
+    );
+
     setValue({
       isLoading: false,
-      data: v3PositionsWithHf,
+      data: sortedArray,
     });
   }, [chainId, core, v3Position.data, v3Position.isLoading]);
 

@@ -121,8 +121,8 @@ const IconLoader = (props: IconLoaderProps) => {
     .then((image) => {
       setIcon(image.default);
     })
-    .catch((err) => {
-      // if (Icon !== DefaultIcon) setIcon(DefaultIcon)
+    .catch(() => {
+      // if (Icon !== DefaultIcon) setIcon(DefaultIcon);
     });
 
   return (
