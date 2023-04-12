@@ -1,6 +1,5 @@
 import { BigNumber } from "ethers";
 import { useCallback, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
 import { getDisplayBalance } from "../../utils/formatBalance";
 import { IUserDataWithHF } from "../../utils/interface";
 import { useGetChainId } from "../../utils/NetworksCustomHooks";
@@ -19,7 +18,6 @@ const useGetPositionHF = () => {
   });
 
   const core = useCore();
-  const { address: account } = useAccount();
 
   const chainId = useGetChainId();
   const v3Position = useGetV3UnhealthyPosition("");
