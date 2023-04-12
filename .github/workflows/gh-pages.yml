@@ -21,9 +21,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          # cache: "npm"
       - run: yarn
-      # - run: yarn build --if-present
+      - run: yarn build
       #- run: yarn test
 
       - name: Deploy with gh-pages
