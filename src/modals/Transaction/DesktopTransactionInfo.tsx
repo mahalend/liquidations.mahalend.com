@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import TxModal from './TxModal';
+import React from "react";
+import styled from "styled-components";
+import TxModal from "./TxModal";
 
 interface Iprops {
   openModal: boolean;
@@ -8,23 +8,20 @@ interface Iprops {
 }
 
 const DesktopTransactionInfo = (props: Iprops) => {
-  const {
-    openModal,
-    onDismiss,
-  } = props;
+  const { openModal, onDismiss } = props;
 
   if (!openModal) return null;
 
   return (
     <MainDiv>
-      <BackgroundAbsolute onClick={() => onDismiss()}/>
+      <BackgroundAbsolute onClick={() => onDismiss()} />
       <PositionDiv>
         <WalletDiv id={"desktop_tx_modal"}>
-          <TxModal openModal={openModal} onDismiss={() => onDismiss()}/>
+          <TxModal openModal={openModal} onDismiss={() => onDismiss()} />
         </WalletDiv>
       </PositionDiv>
     </MainDiv>
-  )
+  );
 };
 
 export default DesktopTransactionInfo;

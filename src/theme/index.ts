@@ -13,8 +13,8 @@ import {
   transparent,
   transparentog,
   white,
-  yellow
-} from './colors'
+  yellow,
+} from "./colors";
 
 const theme = {
   borderRadius: 12,
@@ -36,7 +36,7 @@ const theme = {
     transparent,
     transparentog,
     gradients,
-    yellow
+    yellow,
   },
   siteWidth: 1200,
   spacing: {
@@ -49,6 +49,6 @@ const theme = {
     7: 64,
   },
   topBarSize: 72,
-}
+};
 
-export default theme
+export default theme;

@@ -1,13 +1,13 @@
-import {TransactionResponse} from '@ethersproject/providers';
-import {useCallback, useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useGetAccount, useGetChainId} from "../../utils/NetworksCustomHooks";
+import { TransactionResponse } from "@ethersproject/providers";
+import { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetAccount, useGetChainId } from "../../utils/NetworksCustomHooks";
 
-import {useAddPopup} from '../application/hooks';
-import {AppDispatch, AppState} from '../index';
+import { useAddPopup } from "../application/hooks";
+import { AppDispatch, AppState } from "../index";
 
-import {addTransaction, clearAllTransactions} from './actions';
-import {TransactionDetails} from './reducer';
+import { addTransaction, clearAllTransactions } from "./actions";
+import { TransactionDetails } from "./reducer";
 
 /**
  * Helper that can take a ethers library transaction response and
@@ -15,7 +15,10 @@ import {TransactionDetails} from './reducer';
  */
 export function useTransactionAdder(): (
   response: TransactionResponse,
-  customData?: { summary?: string; approval?: { tokenAddress: string; spender: string } },
+  customData?: {
+    summary?: string;
+    approval?: { tokenAddress: string; spender: string };
+  }
 ) => void {
   const chainId = useGetChainId();
   const account = useGetAccount();
@@ -28,14 +31,17 @@ export function useTransactionAdder(): (
       {
         summary,
         approval,
-      }: { summary?: string; approval?: { tokenAddress: string; spender: string } } = {},
+      }: {
+        summary?: string;
+        approval?: { tokenAddress: string; spender: string };
+      } = {}
     ) => {
       if (!account) return;
       if (!chainId) return;
 
-      const {hash} = response;
+      const { hash } = response;
       if (!hash) {
-        throw Error('No transaction hash found.');
+        throw Error("No transaction hash found.");
       }
 
       addPopup(
@@ -47,20 +53,24 @@ export function useTransactionAdder(): (
             summary: summary,
           },
         },
-        hash,
+        hash
       );
 
-      dispatch(addTransaction({hash, from: account, chainId, approval, summary}));
+      dispatch(
+        addTransaction({ hash, from: account, chainId, approval, summary })
+      );
     },
     // eslint-disable-next-line
-    [dispatch, chainId, account],
+    [dispatch, chainId, account]
   );
 }
 
 // Returns all the transactions for the current chain.
 export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
   const chainId = useGetChainId();
-  const state = useSelector<AppState, AppState['transactions']>((state) => state.transactions);
+  const state = useSelector<AppState, AppState["transactions"]>(
+    (state) => state.transactions
+  );
 
   return chainId ? state[chainId] ?? {} : {};
 }
@@ -84,13 +94,13 @@ export function isTransactionRecent(tx: TransactionDetails): boolean {
 // Returns whether a token has a pending approval transaction.
 export function useHasPendingApproval(
   tokenAddress: string | undefined,
-  spender: string | undefined,
+  spender: string | undefined
 ): boolean {
   const allTransactions = useAllTransactions();
   return useMemo(
     () =>
-      typeof tokenAddress === 'string' &&
-      typeof spender === 'string' &&
+      typeof tokenAddress === "string" &&
+      typeof spender === "string" &&
       Object.keys(allTransactions).some((hash) => {
         const tx = allTransactions[hash];
         if (!tx) return false;
@@ -106,17 +116,19 @@ export function useHasPendingApproval(
           );
         }
       }),
-    [allTransactions, spender, tokenAddress],
+    [allTransactions, spender, tokenAddress]
   );
 }
 
-export function useClearAllTransactions(): { clearAllTransactions: () => void } {
+export function useClearAllTransactions(): {
+  clearAllTransactions: () => void;
+} {
   const chainId = useGetChainId();
   const dispatch = useDispatch<AppDispatch>();
   return {
-    clearAllTransactions: useCallback(() => dispatch(clearAllTransactions({chainId: chainId})), [
-      chainId,
-      dispatch,
-    ]),
+    clearAllTransactions: useCallback(
+      () => dispatch(clearAllTransactions({ chainId: chainId })),
+      [chainId, dispatch]
+    ),
   };
 }

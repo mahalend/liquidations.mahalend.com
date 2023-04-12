@@ -1,30 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 export interface TextWrapperProps {
-  fontFamily?: 'Inter' | 'Syne';
+  fontFamily?: "Inter" | "Syne";
   fontStyle?: string;
-  fontWeight?: 'bold' | 300 | 600;
+  fontWeight?: "bold" | 300 | 600;
   fontSize?: 44 | 32 | 24 | 18 | 16 | 14 | 12;
   FletterSpacing?: string;
   Fcolor?: string;
   text: string | JSX.Element;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
   className?: string;
   lineHeight?: string;
 }
 
 const TextWrapper = (props: TextWrapperProps) => {
   const {
-    fontFamily = 'Inter',
-    fontStyle = 'normal',
+    fontFamily = "Inter",
+    fontStyle = "normal",
     fontWeight = 300,
     fontSize = 14,
-    FletterSpacing = 'normal',
-    Fcolor = '#FFFFFF',
-    text = '',
-    className = '',
-    align = 'left',
+    FletterSpacing = "normal",
+    Fcolor = "#FFFFFF",
+    text = "",
+    className = "",
+    align = "left",
   } = props;
 
   if (typeof text === "string") {
@@ -36,7 +36,7 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
         fcolor={Fcolor}
-        style={{color: Fcolor}}
+        style={{ color: Fcolor }}
         className={className}
         align={align}
       >
@@ -52,25 +52,25 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
         fcolor={Fcolor}
-        style={{color: Fcolor}}
+        style={{ color: Fcolor }}
         className={className}
         align={align}
       >
         {text}
       </StyledDiv>
-    )
+    );
   }
 };
 
 export default TextWrapper;
 
 interface StyledTextProps {
-  fontFamily: 'Inter' | 'Syne';
+  fontFamily: "Inter" | "Syne";
   fontStyle: string;
-  fontWeight: 'bold' | 300 | 600;
+  fontWeight: "bold" | 300 | 600;
   fontSize: 44 | 32 | 24 | 18 | 16 | 14 | 12;
   letterSpacing: string;
-  align: 'left' | 'center' | 'right';
+  align: "left" | "center" | "right";
   fcolor: string;
 }
 

@@ -1,4 +1,4 @@
-import {Configuration} from "../utils/interface";
+import { Configuration } from "../utils/interface";
 
 const configurations: { [env: string]: Configuration } = {
   1: {

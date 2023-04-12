@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import Home from "./home";
 
@@ -8,13 +8,12 @@ const Navigation = () => {
     <>
       <Switch>
         <Route exact path="/">
-          <Home/>
+          <Home />
         </Route>
-        <Redirect to="/"/>
+        <Redirect to="/" />
       </Switch>
     </>
-
   );
-}
+};
 
 export default Navigation;
