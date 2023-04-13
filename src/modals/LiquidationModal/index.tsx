@@ -12,6 +12,7 @@ import useGetAddressBalance from "../../hooks/useGetAddressBalance";
 import { getDisplayBalance } from "../../utils/formatBalance";
 import {
   IModalProps,
+  IReserveData,
   IUserBorrowReserve,
   IUserDataWithHF,
 } from "../../utils/interface";
@@ -20,8 +21,20 @@ interface IProps {
   selectedUserData: IUserDataWithHF;
 }
 
+const reservesData: IReserveData[] = [
+  {
+    symbol: "DAI",
+    configurationHistory: [
+      {
+        timestamp: 1670829767,
+        reserveLiquidationBonus: "11000",
+        reserveLiquidationThreshold: "9000",
+      },
+    ],
+  },
+];
+
 const LiquidationModal = (props: IModalProps & IProps) => {
-  console.log("props", props.selectedUserData);
   const [amount, setAmount] = useState<string>("");
 
   const [openDepositedCollateral, setOpenDepositedCollateral] =
@@ -36,11 +49,12 @@ const LiquidationModal = (props: IModalProps & IProps) => {
       (data) => data.reserve.symbol
     );
   }, [props.selectedUserData.collateralReserve]);
-  /*const depositCollateralReserve: IUserCollateralReserve = useMemo(() => {
-    return props.selectedUserData.collateralReserve.filter(
-      (data) => data.reserve.symbol === selectedDepositedCollateral
-    )[0];
-  }, [props.selectedUserData.collateralReserve, selectedDepositedCollateral]);*/
+  /*const depositCollateralReserve: IUserCollateralReserve | undefined =
+    useMemo(() => {
+      return props.selectedUserData.collateralReserve.filter(
+        (data) => data.reserve.symbol === selectedDepositedCollateral
+      )[0];
+    }, [props.selectedUserData.collateralReserve, selectedDepositedCollateral]);*/
 
   const [openBorrowToken, setOpenBorrowToken] = useState<boolean>(false);
   const [selectedBorrowToken, setSelectedBorrowToken] =
@@ -61,22 +75,31 @@ const LiquidationModal = (props: IModalProps & IProps) => {
 
   const maxAllowedLiquidation = useMemo(() => {
     if (borrowReserve === undefined) return 0;
-
-    // here if above CLOSE_FACTOR_HF_THRESHOLD then 50% allowed and if below then 100% allowed
-    //ToDo: Above logic setup
-    return (
-      Number(
-        getDisplayBalance(
-          BigNumber.from(borrowReserve.currentTotalDebt),
-          borrowReserve.reserve.decimals
-        )
-      ) / 2
+    const value = Number(
+      getDisplayBalance(
+        BigNumber.from(borrowReserve.currentTotalDebt),
+        borrowReserve.reserve.decimals
+      )
     );
-  }, [borrowReserve]);
+    const HF = Number(getDisplayBalance(props.selectedUserData.hf));
+
+    if (HF > 1) return 0;
+    else if (HF > 0.95) return value / 2;
+    else return value;
+  }, [borrowReserve, props.selectedUserData.hf]);
 
   const borrowTokenBalance = useGetAddressBalance(
     borrowReserve?.reserve.underlyingAsset || null
   );
+
+  const reserveData = {
+    isLoading: false,
+    data: reservesData,
+  };
+
+  /*const reserveData = useGetReservesData(
+    depositCollateralReserve?.reserve.symbol || null
+  );*/
 
   return (
     <Modal
@@ -189,11 +212,21 @@ const LiquidationModal = (props: IModalProps & IProps) => {
             label={"Max allowed Debt"}
             value={maxAllowedLiquidation.toString()}
           />
-          <DataField
-            label={"Collateral bonus"}
-            value={`x %`}
-            className={"m-t-12"}
-          />
+          {reserveData.data && reserveData.data.length > 0 && (
+            <DataField
+              label={"Collateral bonus"}
+              isValueLoading={reserveData.isLoading}
+              value={`${
+                Number(
+                  reserveData.data[0].configurationHistory[0]
+                    .reserveLiquidationBonus
+                ) /
+                  100 -
+                100
+              }%`}
+              className={"m-t-12"}
+            />
+          )}
         </div>
         <Button
           trackingid={"liquidate-modal"}

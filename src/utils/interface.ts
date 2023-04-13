@@ -169,3 +169,14 @@ export interface IUserData {
 export interface IUserDataWithHF extends IUserData {
   hf: BigNumber;
 }
+
+export interface IReserveData {
+  symbol: string;
+  configurationHistory: [
+    {
+      timestamp: number;
+      reserveLiquidationBonus: string;
+      reserveLiquidationThreshold: string;
+    }
+  ];
+}
