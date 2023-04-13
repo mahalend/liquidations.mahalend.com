@@ -4,7 +4,7 @@ import useTokenBalanceOf from "./useTokenBalanceOf";
 
 const useTokenBalance = (token: ERC20) => {
   const core = useCore();
-  if (core) return useTokenBalanceOf(token, core.myAccount || "");
+  return useTokenBalanceOf(token, core?.myAccount || "");
 };
 
 export default useTokenBalance;
