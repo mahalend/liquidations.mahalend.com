@@ -59,10 +59,11 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
   }
 
   const url =
-    "https://gateway.thegraph.com/api/2e2459d46adbe9edc64838d10f1dde6e/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
-  // const url = 'https://api.thegraph.com/subgraphs/name/aave/protocol-v2';
+    "https://gateway.thegraph.com/api/97234aa5cd9d69f186d4bd0dcacaf236/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
+  // const url = "https://api.thegraph.com/subgraphs/name/aave/protocol-v2";
 
   const fetchV3Apr = useCallback(async () => {
+    // Todo: Get reserveLiquidationThreshold, reserveLiquidationBonus
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -112,10 +113,17 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
     })
       .then((res) => res.json())
       .then((res: { data: { users: IUserData[] } }) => {
-        setData({
-          isLoading: false,
-          data: res.data.users,
-        });
+        if (res.data?.users) {
+          setData({
+            isLoading: false,
+            data: res.data.users,
+          });
+        } else {
+          setData({
+            isLoading: false,
+            data: [],
+          });
+        }
       })
       .catch((e) => {
         console.log("error", e);

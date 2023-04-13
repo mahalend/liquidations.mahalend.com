@@ -2,19 +2,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import { DataGrid, GridCellParams } from "@material-ui/data-grid";
 import { BigNumber } from "ethers";
 import React, { useState } from "react";
-import Button from "../../components/Button";
+import Button from "../components/Button";
 
-import IconLoader from "../../components/IconLoader";
-import config from "../../config";
-import "../../customCss/Custom-Mahadao-Data-Table.css";
-import { truncateMiddle } from "../../utils";
-import { getDisplayBalance } from "../../utils/formatBalance";
+import IconLoader from "../components/IconLoader";
+import TextWrapper from "../components/TextWrapper";
+import config from "../config";
+import "../customCss/Custom-Mahadao-Data-Table.css";
+import theme from "../theme";
+import { truncateMiddle } from "../utils";
+import { getDisplayBalance } from "../utils/formatBalance";
 import {
   IUserBorrowReserve,
   IUserCollateralReserve,
   IUserDataWithHF,
-} from "../../utils/interface";
-import { useGetChainId } from "../../utils/NetworksCustomHooks";
+} from "../utils/interface";
+import { useGetChainId } from "../utils/NetworksCustomHooks";
 
 export function SortedDescendingIcon() {
   return <IconLoader iconName={"ArrowUp"} iconType="arrow" />;
@@ -53,9 +55,10 @@ const useStyles = makeStyles({
 
 type Props = {
   value: IUserDataWithHF[];
+  setSelectedUser: (data: IUserDataWithHF) => void;
 };
 
-const PAGINATION_PAGE_SIZE = 5;
+const PAGINATION_PAGE_SIZE = 4;
 
 const AllPositionData = (props: Props) => {
   const chainId = useGetChainId();
@@ -69,6 +72,8 @@ const AllPositionData = (props: Props) => {
   }, [props.data]);*/
 
   const handleLiquidate = (user: string) => {
+    const userFiltered = props.value.filter((data) => data.id === user);
+    if (userFiltered.length === 1) props.setSelectedUser(userFiltered[0]);
     console.log("data", user, pageNo, noOfSize);
   };
 
@@ -89,6 +94,7 @@ const AllPositionData = (props: Props) => {
             }
           >
             {truncateMiddle(params.row.id, 15)}
+            <IconLoader iconName={"ArrowLink"} iconType={"arrow"} />
           </div>
         );
       },
@@ -151,23 +157,34 @@ const AllPositionData = (props: Props) => {
       renderCell: (params: GridCellParams) => {
         return (
           <div className={"start-center"}>
-            {Number(getDisplayBalance(params.row.hf)).toFixed(4)}
+            <TextWrapper
+              text={Number(getDisplayBalance(params.row.hf)).toFixed(4)}
+              color={
+                Number(getDisplayBalance(params.row.hf)) > 1
+                  ? theme.color.green[300]
+                  : theme.color.red[300]
+              }
+            />
           </div>
         );
       },
     },
     {
       field: "delete",
-      headerName: "LIQUIDATE",
+      headerName: " ",
       flex: 0.1,
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <div
-            className={"start-center"}
-            onClick={() => handleLiquidate(params.row.id)}
-          >
-            <Button trackingid={"liquidate"}>Liquidate</Button>
+          <div className={"start-center"}>
+            <Button
+              trackingid={"liquidate"}
+              className={"primary-button"}
+              disabled={Number(getDisplayBalance(params.row.hf)) < 1}
+              onClick={() => handleLiquidate(params.row.id)}
+            >
+              Liquidate
+            </Button>
           </div>
         );
       },
@@ -186,7 +203,7 @@ const AllPositionData = (props: Props) => {
           rows={props.value}
           columns={columns}
           pageSize={PAGINATION_PAGE_SIZE}
-          rowCount={5}
+          rowCount={PAGINATION_PAGE_SIZE}
           paginationMode="server"
           rowHeight={84}
           onPageChange={(newPage) => {

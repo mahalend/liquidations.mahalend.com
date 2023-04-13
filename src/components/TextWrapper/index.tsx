@@ -7,7 +7,7 @@ export interface TextWrapperProps {
   fontWeight?: "bold" | 300 | 600;
   fontSize?: 44 | 32 | 24 | 18 | 16 | 14 | 12;
   FletterSpacing?: string;
-  Fcolor?: string;
+  color?: string;
   text: string | JSX.Element;
   align?: "left" | "center" | "right";
   className?: string;
@@ -21,7 +21,7 @@ const TextWrapper = (props: TextWrapperProps) => {
     fontWeight = 300,
     fontSize = 14,
     FletterSpacing = "normal",
-    Fcolor = "#FFFFFF",
+    color = "#FFFFFF",
     text = "",
     className = "",
     align = "left",
@@ -35,8 +35,8 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontWeight={fontWeight}
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
-        fcolor={Fcolor}
-        style={{ color: Fcolor }}
+        color={color}
+        style={{ color: color }}
         className={className}
         align={align}
       >
@@ -51,8 +51,8 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontWeight={fontWeight}
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
-        fcolor={Fcolor}
-        style={{ color: Fcolor }}
+        color={color}
+        style={{ color: color }}
         className={className}
         align={align}
       >
@@ -71,7 +71,7 @@ interface StyledTextProps {
   fontSize: 44 | 32 | 24 | 18 | 16 | 14 | 12;
   letterSpacing: string;
   align: "left" | "center" | "right";
-  fcolor: string;
+  color: string;
 }
 
 const StyledText = styled.p<StyledTextProps>`

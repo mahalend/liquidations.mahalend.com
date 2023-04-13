@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import DefaultIcon from "../../assets/icons/misc/Default.svg";
 
 export interface IconLoaderProps {
   iconName:
+    | "QuickSwap"
+    | "PancakeSwap"
     | "ArrowUp"
     | "ArrowDown"
     | "ArrowLeft"
     | "ArrowRight"
     | "ArrowLink"
-    | "ArrowLinkColored"
     | "ArrowFilledUp"
     | "ArrowTailUp"
     | "ArrowTailDown"
@@ -15,9 +20,6 @@ export interface IconLoaderProps {
     | "ArrowTailRight"
     | "ARTHlg"
     | "Mahalg"
-    | "MAHAStarterlg"
-    | "MAHAStartersm"
-    | "BSC"
     | "Checked"
     | "Empty"
     | "GreenCheck"
@@ -48,7 +50,7 @@ export interface IconLoaderProps {
     | "Pending"
     | "Success"
     | "Caution"
-    | "ColoredSuccess"
+    | "ARTH.usd"
     | "ARTH"
     | "ARTHX"
     | "MAHA"
@@ -63,8 +65,6 @@ export interface IconLoaderProps {
     | "WBTC"
     | "WETH"
     | "DAI"
-    | "SCLP"
-    | "BNB"
     | "Sync"
     | "InfoToolTip"
     | "Cross"
@@ -75,24 +75,23 @@ export interface IconLoaderProps {
     | "Copy"
     | "Copied"
     | "Search"
-    | "DotMenu"
-    | "Loans"
+    | "Polygon"
+    | "Bsc"
+    | "Gov"
     | "Starter"
     | "Add"
     | "Delete"
     | "DeleteFaded"
     | "Settings"
     | "Default"
-    | "Tick"
-    | "ProposalPending"
     | "BentoMenu"
     | string;
   iconType?:
     | "arrow"
     | "infoTip"
     | "exchangePlatform"
-    | "socialMedia"
     | "products"
+    | "socialMedia"
     | "status"
     | "tokenSymbol"
     | "misc"
@@ -115,20 +114,22 @@ const IconLoader = (props: IconLoaderProps) => {
     onClick,
   } = props;
 
-  const [Icon, setIcon] = useState<string>("");
+  const [Icon, setIcon] = useState<string>(DefaultIcon);
 
-  import(`../../assets/icons/${iconType}/${iconName}.svg`)
-    .then((image) => {
-      setIcon(image.default);
-    })
-    .catch(() => {
-      // if (Icon !== DefaultIcon) setIcon(DefaultIcon);
-    });
+  useEffect(() => {
+    import(`../../assets/icons/${iconType}/${iconName}.svg`)
+      .then(async (image) => {
+        setIcon(image.default);
+      })
+      .catch(() => {
+        setIcon(DefaultIcon);
+      });
+  }, [iconName, iconType]);
 
   return (
     <img
       src={Icon}
-      alt={Icon}
+      alt={iconName}
       width={width}
       height={height}
       className={className}
