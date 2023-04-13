@@ -10,7 +10,6 @@ import { getDisplayBalance } from "../../utils/formatBalance";
 import {
   IModalProps,
   IUserBorrowReserve,
-  IUserCollateralReserve,
   IUserDataWithHF,
 } from "../../utils/interface";
 
@@ -19,6 +18,7 @@ interface IProps {
 }
 
 const LiquidationModal = (props: IModalProps & IProps) => {
+  console.log("props", props.selectedUserData);
   const [amount, setAmount] = useState<string>("");
 
   const [openDepositedCollateral, setOpenDepositedCollateral] =
@@ -50,13 +50,15 @@ const LiquidationModal = (props: IModalProps & IProps) => {
       (data) => data.reserve.symbol
     );
   }, [props.selectedUserData.borrowReserve]);
-  const borrowReserve: IUserBorrowReserve = useMemo(() => {
+  const borrowReserve: IUserBorrowReserve | undefined = useMemo(() => {
     return props.selectedUserData.borrowReserve.filter(
       (data) => data.reserve.symbol === selectedBorrowToken
     )[0];
   }, [props.selectedUserData.borrowReserve, selectedBorrowToken]);
 
   const maxAllowedLiquidation = useMemo(() => {
+    if (borrowReserve === undefined) return 0;
+
     // here if above CLOSE_FACTOR_HF_THRESHOLD then 50% allowed and if below then 100% allowed
     //ToDo: Above logic setup
     return (
@@ -67,7 +69,7 @@ const LiquidationModal = (props: IModalProps & IProps) => {
         )
       ) / 2
     );
-  }, [borrowReserve.currentTotalDebt, borrowReserve.reserve.decimals]);
+  }, [borrowReserve]);
   console.log("maxAllowedLiquidation", maxAllowedLiquidation);
 
   return (
@@ -112,7 +114,6 @@ const LiquidationModal = (props: IModalProps & IProps) => {
             <Input
               value={amount}
               setValue={(data) => setAmount(data)}
-              maxTag={true}
               onMaxClick={() => {
                 setAmount(
                   Number(

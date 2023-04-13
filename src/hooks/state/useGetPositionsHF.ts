@@ -20,7 +20,7 @@ const useGetPositionHF = () => {
   const core = useCore();
 
   const chainId = useGetChainId();
-  const v3Position = useGetV3UnhealthyPosition("");
+  const v3Position = useGetV3UnhealthyPosition();
 
   const fetchData = useCallback(async () => {
     const contract = core?.getPoolContract(chainId);

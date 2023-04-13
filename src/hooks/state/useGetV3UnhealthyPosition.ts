@@ -1,65 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
+import { IUserData } from "../../utils/interface";
 
 interface IV3Positions {
   isLoading: boolean;
   data: IUserData[];
 }
 
-export interface IUserCollateralReserve {
-  currentATokenBalance: string;
-  reserve: {
-    usageAsCollateralEnabled: boolean;
-    reserveLiquidationThreshold: string;
-    reserveLiquidationBonus: string;
-    borrowingEnabled: boolean;
-    utilizationRate: string;
-    symbol: string;
-    underlyingAsset: string;
-    isPaused: boolean;
-    price: {
-      priceInEth: string;
-    };
-    decimals: number;
-  };
-}
-
-export interface IUserBorrowReserve {
-  currentTotalDebt: string;
-  reserve: {
-    usageAsCollateralEnabled: boolean;
-    reserveLiquidationThreshold: string;
-    borrowingEnabled: boolean;
-    utilizationRate: string;
-    symbol: string;
-    underlyingAsset: string;
-    price: {
-      priceInEth: string;
-    };
-    decimals: number;
-  };
-}
-
-export interface IUserData {
-  id: string;
-  borrowedReservesCount: number;
-  collateralReserve: IUserCollateralReserve[];
-  borrowReserve: IUserBorrowReserve[];
-}
-
-const useGetV3UnhealthyPosition = (user_id: string) => {
+const useGetV3UnhealthyPosition = () => {
   const [data, setData] = useState<IV3Positions>({ isLoading: true, data: [] });
 
   const count = 0;
   // let maxCount = 6;
-  let user_id_query = "";
-
-  if (user_id) {
-    user_id_query = `id: "${user_id}",`;
-    // maxCount = 1;
-  }
 
   const url =
-    "https://gateway.thegraph.com/api/97234aa5cd9d69f186d4bd0dcacaf236/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
+    "https://gateway.thegraph.com/api/4b90debd6507cf14fefec6b071de88dd/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
   // const url = "https://api.thegraph.com/subgraphs/name/aave/protocol-v2";
 
   const fetchV3Apr = useCallback(async () => {
@@ -72,7 +26,7 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
       query GET_LOANS {
         users(first:10, skip:${
           1000 * count
-        }, orderBy: id, orderDirection: desc, where: {${user_id_query}borrowedReservesCount_gt: 0}) {
+        }, orderBy: id, orderDirection: desc, where: {borrowedReservesCount_gt: 0}) {
           id
           borrowedReservesCount
           collateralReserve:reserves(where: {currentATokenBalance_gt: 0}) {
@@ -113,6 +67,7 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
     })
       .then((res) => res.json())
       .then((res: { data: { users: IUserData[] } }) => {
+        console.log("data", res);
         if (res.data?.users) {
           setData({
             isLoading: false,
@@ -128,7 +83,7 @@ const useGetV3UnhealthyPosition = (user_id: string) => {
       .catch((e) => {
         console.log("error", e);
       });
-  }, [count, user_id_query]);
+  }, [count]);
 
   useEffect(() => {
     setData({ isLoading: true, data: [] });

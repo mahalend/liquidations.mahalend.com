@@ -209,7 +209,6 @@ const AllPositionData = (props: Props) => {
           onPageChange={(newPage) => {
             setPageNo(Number(newPage) || 0);
           }}
-          onRowClick={(data) => console.log("data", data)}
           autoHeight={true}
           disableColumnMenu={true}
           components={{
