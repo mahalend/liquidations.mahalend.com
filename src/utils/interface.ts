@@ -60,6 +60,7 @@ export type Configuration = {
   blockchainTokenDecimals: number;
   supportedTokens: string[];
   decimalOverrides: { [name: string]: number };
+  graphqlUrl: string;
 };
 
 export type configKeys = keyof Configuration;

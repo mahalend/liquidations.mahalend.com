@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import config from "../../config";
 import { IUserData } from "../../utils/interface";
+import { useGetChainId } from "../../utils/NetworksCustomHooks";
 
 interface IV3Positions {
   isLoading: boolean;
@@ -8,17 +10,13 @@ interface IV3Positions {
 
 const useGetV3UnhealthyPosition = () => {
   const [data, setData] = useState<IV3Positions>({ isLoading: true, data: [] });
+  const chainId = useGetChainId();
 
   const count = 0;
   // let maxCount = 6;
 
-  const url =
-    "https://gateway.thegraph.com/api/4b90debd6507cf14fefec6b071de88dd/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
-  // const url = "https://api.thegraph.com/subgraphs/name/aave/protocol-v2";
-
   const fetchV3Apr = useCallback(async () => {
-    // Todo: Get reserveLiquidationThreshold, reserveLiquidationBonus
-    fetch(url, {
+    fetch(config[chainId].graphqlUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

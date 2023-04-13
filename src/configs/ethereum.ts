@@ -18,6 +18,8 @@ const configurations: { [env: string]: Configuration } = {
     decimalOverrides: {
       USDC: 6,
     },
+    graphqlUrl:
+      "https://gateway.thegraph.com/api/4b90debd6507cf14fefec6b071de88dd/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h",
   },
 };
 

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import config from "../../config";
 import { IReserveData } from "../../utils/interface";
+import { useGetChainId } from "../../utils/NetworksCustomHooks";
 
 interface IReserve {
   isLoading: boolean;
@@ -8,14 +10,11 @@ interface IReserve {
 
 const useGetReservesData = (symbol: string | null) => {
   const [data, setData] = useState<IReserve>({ isLoading: true, data: [] });
-
-  const url =
-    "https://gateway.thegraph.com/api/4b90debd6507cf14fefec6b071de88dd/subgraphs/id/5YfboeM5FQD4rjmJV2YTCAkQHZr8BqgTe2VfLL245p2h";
-  // const url = "https://api.thegraph.com/subgraphs/name/aave/protocol-v2";
+  const chainId = useGetChainId();
 
   const fetchData = useCallback(async () => {
     // Todo: Get reserveLiquidationThreshold, reserveLiquidationBonus
-    fetch(url, {
+    fetch(config[chainId].graphqlUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
