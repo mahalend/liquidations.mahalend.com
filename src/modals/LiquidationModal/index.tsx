@@ -1,6 +1,5 @@
 import { BigNumber } from "ethers";
 import React, { useMemo, useState } from "react";
-import Button from "../../components/Button";
 import CollateralDropDown from "../../components/CollateralDropDown";
 import DataField from "../../components/DataField";
 import Input from "../../components/Input";
@@ -8,14 +7,18 @@ import InputContainer from "../../components/InputContainer";
 import Modal from "../../components/Modal";
 import Selector from "../../components/Selector";
 import TextWrapper from "../../components/TextWrapper";
+import useCore from "../../hooks/useCore";
 import useGetAddressBalance from "../../hooks/useGetAddressBalance";
-import { getDisplayBalance } from "../../utils/formatBalance";
+import theme from "../../theme";
+import { formatToBN, getDisplayBalance } from "../../utils/formatBalance";
 import {
   IModalProps,
   IReserveData,
   IUserBorrowReserve,
+  IUserCollateralReserve,
   IUserDataWithHF,
 } from "../../utils/interface";
+import LiquidationButton from "./LiquidationButton";
 
 interface IProps {
   selectedUserData: IUserDataWithHF;
@@ -35,12 +38,13 @@ const reservesData: IReserveData[] = [
 ];
 
 const LiquidationModal = (props: IModalProps & IProps) => {
+  const core = useCore();
   const [amount, setAmount] = useState<string>("");
 
   const [openDepositedCollateral, setOpenDepositedCollateral] =
     useState<boolean>(false);
   const [selectedDepositedCollateral, setSelectedDepositedCollateral] =
-    useState<string>("Select Receiving Collateral");
+    useState<string>("");
   const depositedCollateral = useMemo(() => {
     setSelectedDepositedCollateral(
       props.selectedUserData.collateralReserve[0].reserve.symbol
@@ -49,16 +53,15 @@ const LiquidationModal = (props: IModalProps & IProps) => {
       (data) => data.reserve.symbol
     );
   }, [props.selectedUserData.collateralReserve]);
-  /*const depositCollateralReserve: IUserCollateralReserve | undefined =
+  const depositCollateralReserve: IUserCollateralReserve | undefined =
     useMemo(() => {
       return props.selectedUserData.collateralReserve.filter(
         (data) => data.reserve.symbol === selectedDepositedCollateral
       )[0];
-    }, [props.selectedUserData.collateralReserve, selectedDepositedCollateral]);*/
+    }, [props.selectedUserData.collateralReserve, selectedDepositedCollateral]);
 
   const [openBorrowToken, setOpenBorrowToken] = useState<boolean>(false);
-  const [selectedBorrowToken, setSelectedBorrowToken] =
-    useState<string>("Select Token");
+  const [selectedBorrowToken, setSelectedBorrowToken] = useState<string>("");
   const borrowToken = useMemo(() => {
     setSelectedBorrowToken(
       props.selectedUserData.borrowReserve[0].reserve.symbol
@@ -97,9 +100,29 @@ const LiquidationModal = (props: IModalProps & IProps) => {
     data: reservesData,
   };
 
+  //ToDo: UnComment for production
   /*const reserveData = useGetReservesData(
     depositCollateralReserve?.reserve.symbol || null
   );*/
+
+  const errorMessage: string = useMemo(() => {
+    if (formatToBN(amount).gt(maxAllowedLiquidation)) {
+      return "You cannot liquidate more than the max allowed liquidation";
+    }
+    if (formatToBN(amount).lt(borrowTokenBalance.value)) {
+      return "Insufficient balance";
+    }
+    return "";
+  }, [amount, borrowTokenBalance.value, maxAllowedLiquidation]);
+
+  if (
+    borrowReserve === undefined ||
+    depositCollateralReserve === undefined ||
+    core === undefined ||
+    core === null ||
+    core?._signer === undefined
+  )
+    return <div>Something went wrong please try again later</div>;
 
   return (
     <Modal
@@ -228,12 +251,24 @@ const LiquidationModal = (props: IModalProps & IProps) => {
             />
           )}
         </div>
-        <Button
-          trackingid={"liquidate-modal"}
-          className={"m-t-32 primary-button"}
-        >
-          Liquidate
-        </Button>
+        <div className={"m-t-32"}>
+          {errorMessage !== "" ? (
+            <TextWrapper
+              text={errorMessage}
+              color={theme.color.red[300]}
+              align={"center"}
+            />
+          ) : (
+            <LiquidationButton
+              core={core}
+              signer={core._signer}
+              selectedUserData={props.selectedUserData}
+              amount={amount}
+              borrowReserve={borrowReserve}
+              depositCollateralReserve={depositCollateralReserve}
+            />
+          )}
+        </div>
       </div>
     </Modal>
   );

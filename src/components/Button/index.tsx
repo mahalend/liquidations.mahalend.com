@@ -10,7 +10,7 @@ export interface ITrackingParams {
   skin?: string;
 }
 
-export type trackingIds = "liquidate" | "liquidate-modal";
+export type trackingIds = "liquidate" | "liquidate-modal" | "approve";
 
 interface IProps {
   trackingid: trackingIds;

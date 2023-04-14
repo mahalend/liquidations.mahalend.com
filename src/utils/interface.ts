@@ -1,6 +1,14 @@
 import { BigNumber } from "ethers";
 import Protocol from "../protocol";
 
+export type ITxStatus =
+  | "initial"
+  | "not-initiated"
+  | "in-progress"
+  | "successful"
+  | "not-successful"
+  | "";
+
 export type BasicState = {
   isLoading: boolean;
   value: BigNumber;

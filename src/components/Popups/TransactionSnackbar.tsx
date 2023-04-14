@@ -62,13 +62,13 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
       return (
         <SnackBarInnerContainer style={{ background: "#B87503" }}>
           <div className="flex-start-center white-text">
-            <IconLoader
+            {/*<IconLoader
               iconName={"Pending"}
               // iconType={"status"}
               width={24}
               className="pointer mr10"
               onClick={handleClose}
-            />
+            />*/}
             Transaction Pending
           </div>
           <IconLoader
@@ -83,13 +83,13 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
       return (
         <SnackBarInnerContainer style={{ background: "#178A50" }}>
           <div className="flex-start-center white-text">
-            <IconLoader
+            {/*<IconLoader
               iconName={"Success"}
               // iconType={"status"}
               width={24}
               className="pointer mr10"
               onClick={handleClose}
-            />
+            />*/}
             Transaction Successful
           </div>
           <IconLoader
@@ -104,13 +104,13 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
       return (
         <SnackBarInnerContainer style={{ background: "#BA1E38" }}>
           <div className="flex-start-center white-text">
-            <IconLoader
+            {/* <IconLoader
               iconName={"Alert"}
               // iconType={"status"}
               width={24}
               className="pointer mr10"
               onClick={handleClose}
-            />
+            />*/}
             Transaction Failed
           </div>
           <IconLoader
@@ -127,7 +127,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   const SnackBody = () => {
     return (
       <SnackBarBody>
-        <div style={{ fontWeight: 300, fontSize: 18 }}>
+        <div style={{ fontWeight: 300, fontSize: 14 }}>
           {content?.txn?.success || content?.txn?.loading
             ? content?.txn?.summary || ""
             : content?.error?.message || "Error Occured"}
@@ -156,7 +156,7 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
       {openSnackbar && (
         <Snackbar
           open={openSnackbar}
-          autoHideDuration={3000}
+          autoHideDuration={1000000}
           TransitionComponent={SlideTransition}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -193,7 +193,7 @@ const SnackBarInnerContainer = styled.div`
 `;
 
 const SnackBarBody = styled.div`
-  background: aliceblue;
+  background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(70px);
   border-radius: 0 0 4px 4px;
   padding: 12px 12px 12px 52px;
