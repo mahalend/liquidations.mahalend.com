@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[4143],{54143:function(a,d,c){a.exports=c.p+"static/media/Polygon.9a0dd28dcacd631d7358.svg"}}]);

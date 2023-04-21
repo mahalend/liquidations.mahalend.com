@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[3998],{53998:function(e,a,i){e.exports=i.p+"static/media/Goerli.e66403efafdc442c30ce.svg"}}]);

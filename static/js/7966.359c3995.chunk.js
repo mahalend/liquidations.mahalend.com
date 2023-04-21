@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[7966],{57966:function(a,e,c){a.exports=c.p+"static/media/SCLP.0edd76fcdd4028c90989.svg"}}]);

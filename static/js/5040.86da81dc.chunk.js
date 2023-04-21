@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[5040],{75040:function(e,a,c){e.exports=c.p+"static/media/BentoMenu.2a673eed629b4efbc8ce.svg"}}]);

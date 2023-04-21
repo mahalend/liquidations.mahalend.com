@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[9022],{69022:function(e,a,i){e.exports=i.p+"static/media/GreenCheck.f1d25b75d105130900e1.svg"}}]);

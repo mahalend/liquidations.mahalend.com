@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[1813],{11813:function(e,a,i){e.exports=i.p+"static/media/Wallet.671b6fc9828f2998e8e4.svg"}}]);

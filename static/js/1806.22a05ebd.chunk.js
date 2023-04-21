@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[1806],{91806:function(e,a,d){e.exports=d.p+"static/media/superMAHA.fc1630ddb65d9203de75.svg"}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[8557],{18557:function(a,e,c){a.exports=c.p+"static/media/ETH.ac28370449d252e34978.svg"}}]);

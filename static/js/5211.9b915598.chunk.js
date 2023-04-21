@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[5211],{45211:function(a,e,i){a.exports=i.p+"static/media/Calendar.42009cff1a10b2511fca.svg"}}]);

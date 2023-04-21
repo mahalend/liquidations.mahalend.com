@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[3693],{83693:function(a,e,i){a.exports=i.p+"static/media/YearnFinance.f2350324c387adc2a32e.svg"}}]);

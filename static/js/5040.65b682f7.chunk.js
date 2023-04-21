@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[5040],{75040:function(a,e,i){a.exports=i.p+"static/media/BentoMenu.0f7f463a4c163f26283a.svg"}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[4719],{74719:function(e,a,c){e.exports=c.p+"static/media/Kucoin.d16dc4469e8d2180e078.svg"}}]);

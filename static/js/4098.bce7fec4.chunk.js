@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[4098],{34098:function(a,e,c){a.exports=c.p+"static/media/Telegram.0d1d1628f48f8cf5ac7f.svg"}}]);

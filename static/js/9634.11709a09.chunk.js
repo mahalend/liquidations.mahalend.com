@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[9634],{19634:function(a,i,e){a.exports=e.p+"static/media/ArrowFilledUp.a2f15f95305356551d1f.svg"}}]);

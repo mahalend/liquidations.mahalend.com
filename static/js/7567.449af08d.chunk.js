@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[7567],{7567:function(e,a,i){e.exports=i.p+"static/media/CreameFinance.feb9ff93cf69d49a8e31.svg"}}]);

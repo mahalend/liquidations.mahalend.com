@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[5163],{85163:function(a,e,i){a.exports=i.p+"static/media/POLYGON.0b1affaaa7f2c435e6be.svg"}}]);

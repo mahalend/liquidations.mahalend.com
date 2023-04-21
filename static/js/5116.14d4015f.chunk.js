@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[5116],{75116:function(e,a,c){e.exports=c.p+"static/media/PickleFinance.56d317ceda3ffce3c2f3.svg"}}]);

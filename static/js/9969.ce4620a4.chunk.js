@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkliquidations_mahalend_com=self.webpackChunkliquidations_mahalend_com||[]).push([[9969],{69969:function(a,e,i){a.exports=i.p+"static/media/ColoredPending.f2f4de6a7879bb4a04c6.svg"}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkliquidator_mahalend_com=self.webpackChunkliquidator_mahalend_com||[]).push([[8005],{78005:function(e,a,d){e.exports=d.p+"static/media/Pending.e97d6d1a362c523fe4d2.svg"}}]);
