@@ -1,5 +1,5 @@
 {
-  "name": "liquidator.mahalend.com",
+  "name": "liquidations.mahalend.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,9 +8,14 @@
     "@rainbow-me/rainbowkit": "^0.7.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@uniswap/sdk": "^3.0.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "ethers": "^5.4.6",
     "mixpanel-browser": "^2.46.0",
     "notistack": "^1.0.10",
+    "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.4",
@@ -24,12 +29,7 @@
     "typescript": "^4.9.5",
     "wagmi": "0.6.7",
     "web-vitals": "^2.1.4",
-    "web3": "^1.2.11",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "prettier": "^2.8.7"
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
@@ -38,9 +38,12 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.9",
-    "@types/styled-components": "^5.1.11"
+    "@types/styled-components": "^5.1.11",
+    "gh-pages": "^5.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "echo 'liquidations.mahalend.com' > build/CNAME && gh-pages --dist build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
