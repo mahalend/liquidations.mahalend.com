@@ -11,6 +11,7 @@ interface IV3Positions {
 const useGetV3UnhealthyPosition = () => {
   const [data, setData] = useState<IV3Positions>({ isLoading: true, data: [] });
   const chainId = useGetChainId();
+  console.log("chainId", chainId);
 
   const count = 0;
   // let maxCount = 6;
@@ -81,7 +82,7 @@ const useGetV3UnhealthyPosition = () => {
       .catch((e) => {
         console.log("error", e);
       });
-  }, [count]);
+  }, [chainId]);
 
   useEffect(() => {
     setData({ isLoading: true, data: [] });

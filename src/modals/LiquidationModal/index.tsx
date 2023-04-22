@@ -7,6 +7,7 @@ import InputContainer from "../../components/InputContainer";
 import Modal from "../../components/Modal";
 import Selector from "../../components/Selector";
 import TextWrapper from "../../components/TextWrapper";
+import useGetReservesData from "../../hooks/state/useGetReservesData";
 import useCore from "../../hooks/useCore";
 import useGetAddressBalance from "../../hooks/useGetAddressBalance";
 import theme from "../../theme";
@@ -76,18 +77,13 @@ const LiquidationModal = (props: IModalProps & IProps) => {
     )[0];
   }, [props.selectedUserData.borrowReserve, selectedBorrowToken]);
 
-  const maxAllowedLiquidation = useMemo(() => {
-    if (borrowReserve === undefined) return 0;
-    const value = Number(
-      getDisplayBalance(
-        BigNumber.from(borrowReserve.currentTotalDebt),
-        borrowReserve.reserve.decimals
-      )
-    );
+  const maxAllowedLiquidation: BigNumber = useMemo(() => {
+    if (borrowReserve === undefined) return BigNumber.from(0);
+    const value = BigNumber.from(borrowReserve.currentTotalDebt);
     const HF = Number(getDisplayBalance(props.selectedUserData.hf));
 
-    if (HF > 1) return 0;
-    else if (HF > 0.95) return value / 2;
+    if (HF > 1) return BigNumber.from(0);
+    else if (HF > 0.95) return value.div(2);
     else return value;
   }, [borrowReserve, props.selectedUserData.hf]);
 
@@ -95,15 +91,14 @@ const LiquidationModal = (props: IModalProps & IProps) => {
     borrowReserve?.reserve.underlyingAsset || null
   );
 
-  const reserveData = {
-    isLoading: false,
-    data: reservesData,
-  };
+  /* const reserveData = {
+     isLoading: false,
+     data: reservesData,
+   };*/
 
-  //ToDo: UnComment for production
-  /*const reserveData = useGetReservesData(
+  const reserveData = useGetReservesData(
     depositCollateralReserve?.reserve.symbol || null
-  );*/
+  );
 
   const errorMessage: string = useMemo(() => {
     if (formatToBN(amount).gt(maxAllowedLiquidation)) {
@@ -233,23 +228,25 @@ const LiquidationModal = (props: IModalProps & IProps) => {
         <div className={"m-t-24"}>
           <DataField
             label={"Max allowed Debt"}
-            value={maxAllowedLiquidation.toString()}
+            value={getDisplayBalance(maxAllowedLiquidation)}
           />
-          {reserveData.data && reserveData.data.length > 0 && (
-            <DataField
-              label={"Collateral bonus"}
-              isValueLoading={reserveData.isLoading}
-              value={`${
-                Number(
-                  reserveData.data[0].configurationHistory[0]
-                    .reserveLiquidationBonus
-                ) /
-                  100 -
-                100
-              }%`}
-              className={"m-t-12"}
-            />
-          )}
+          {reserveData.data &&
+            reserveData.data.length > 0 &&
+            reserveData.data[0].configurationHistory[0] && (
+              <DataField
+                label={"Collateral bonus"}
+                isValueLoading={reserveData.isLoading}
+                value={`${
+                  Number(
+                    reserveData.data[0].configurationHistory[0]
+                      .reserveLiquidationBonus
+                  ) /
+                    100 -
+                  100
+                }%`}
+                className={"m-t-12"}
+              />
+            )}
         </div>
         <div className={"m-t-32"}>
           {errorMessage !== "" ? (

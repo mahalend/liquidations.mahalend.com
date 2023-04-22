@@ -58,7 +58,7 @@ type Props = {
   setSelectedUser: (data: IUserDataWithHF) => void;
 };
 
-const PAGINATION_PAGE_SIZE = 4;
+// const PAGINATION_PAGE_SIZE = 5;
 
 const AllPositionData = (props: Props) => {
   const chainId = useGetChainId();
@@ -158,7 +158,7 @@ const AllPositionData = (props: Props) => {
         return (
           <div className={"start-center"}>
             <TextWrapper
-              text={Number(getDisplayBalance(params.row.hf)).toFixed(4)}
+              text={getDisplayBalance(params.row.hf, 18, 4)}
               color={
                 Number(getDisplayBalance(params.row.hf)) > 1
                   ? theme.color.green[300]
@@ -180,7 +180,7 @@ const AllPositionData = (props: Props) => {
             <Button
               trackingid={"liquidate"}
               className={"primary-button"}
-              disabled={Number(getDisplayBalance(params.row.hf)) < 1}
+              disabled={Number(getDisplayBalance(params.row.hf)) > 1}
               onClick={() => handleLiquidate(params.row.id)}
             >
               Liquidate
@@ -199,11 +199,11 @@ const AllPositionData = (props: Props) => {
           getRowId={(rows) => {
             return rows.id;
           }}
-          pagination
+          // pagination
           rows={props.value}
           columns={columns}
-          pageSize={PAGINATION_PAGE_SIZE}
-          rowCount={PAGINATION_PAGE_SIZE}
+          // pageSize={PAGINATION_PAGE_SIZE}
+          // rowCount={props.value.length}
           paginationMode="server"
           rowHeight={84}
           onPageChange={(newPage) => {

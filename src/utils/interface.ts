@@ -62,7 +62,7 @@ export type Configuration = {
   etherscanUrl: string;
   defaultProvider: string;
   deployments: Deployments;
-  blockchainToken: "MATIC" | "ETH" | "BNB";
+  blockchainToken: "ETH" | "ARB";
   gasLimitMultiplier: number;
   blockchainTokenName: string;
   blockchainTokenDecimals: number;

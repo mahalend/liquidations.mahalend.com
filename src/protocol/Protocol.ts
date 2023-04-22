@@ -106,6 +106,11 @@ export class Protocol {
   }
 
   getPoolContract(chainId: number): Contract {
+    console.log(
+      "getPoolContract",
+      this._contracts[chainId]["Pool"].address,
+      chainId
+    );
     return this._contracts[chainId]["Pool"];
   }
 }

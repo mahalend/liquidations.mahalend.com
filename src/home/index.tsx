@@ -1,11 +1,11 @@
-import { BigNumber } from "ethers";
 import React, { useState } from "react";
+import useGetPositionHF from "../hooks/state/useGetPositionsHF";
 import LiquidationModal from "../modals/LiquidationModal";
 import { IUserDataWithHF } from "../utils/interface";
 import "./index.css";
 import PositionsData from "./PositionsData";
 
-const positionData: IUserDataWithHF[] = [
+/*const positionData: IUserDataWithHF[] = [
   {
     id: "0x77cd66d59ac48a0e7ce54ff16d9235a5ffff335e",
     borrowedReservesCount: 1,
@@ -184,13 +184,14 @@ const positionData: IUserDataWithHF[] = [
     ],
     hf: BigNumber.from("0x02219b5142e25e6c59"),
   },
-];
+];*/
 
 const Home = () => {
-  const position = {
+  /*const position = {
     isLoading: false,
     data: positionData,
-  };
+  };*/
+  const position = useGetPositionHF();
   const [selectedUser, setSelectedUser] = useState<IUserDataWithHF | null>(
     null
   );

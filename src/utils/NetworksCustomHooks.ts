@@ -1,13 +1,17 @@
+import { useMemo } from "react";
 import { Chain, useAccount, useNetwork } from "wagmi";
 import { getSupportedChains } from "../config";
 
 export function useGetChainId(): number {
   const { chain } = useNetwork();
-  return chain
-    ? !chain.unsupported
-      ? chain.id
-      : getSupportedChains()[0]
-    : getSupportedChains()[0];
+
+  return useMemo(() => {
+    return chain
+      ? !chain.unsupported
+        ? chain.id
+        : getSupportedChains()[0]
+      : getSupportedChains()[0];
+  }, [chain]);
 }
 
 export function useGetChains(): number[] {

@@ -30,7 +30,7 @@ const TopBar: React.FC = () => {
             <div className="single-line-center-between">
               <div className="dialog-class">
                 <IconLoader
-                  iconName={"Mahalg"}
+                  iconName={"MahalendLogo"}
                   iconType={"brandLogo"}
                   onClick={() => (window.location.href = "/#/")}
                 />
