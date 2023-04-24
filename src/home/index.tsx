@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import TextWrapper from "../components/TextWrapper";
 import useGetPositionHF from "../hooks/state/useGetPositionsHF";
 import LiquidationModal from "../modals/LiquidationModal";
+import theme from "../theme";
 import { IUserDataWithHF } from "../utils/interface";
 import "./index.css";
 import PositionsData from "./PositionsData";
@@ -206,6 +208,27 @@ const Home = () => {
         />
       )}
       <div className={"p-l-24 p-r-24"}>
+        <TextWrapper
+          text={"Liquidation"}
+          fontSize={24}
+          className={"m-b-8"}
+          fontWeight={"bold"}
+        />
+        <TextWrapper
+          text={
+            <div>
+              A liquidation is a process that occurs when a borrower's health
+              factor goes below 1 due to their collateral value not properly
+              covering their loan/debt value.
+              <br />
+              From this ui you would be able to see all the position and can
+              liquidate the position if it's HF goes below 1
+            </div>
+          }
+          fontSize={16}
+          className={"m-b-32"}
+          color={theme.color.transparent[100]}
+        />
         {position.isLoading ? (
           <p>Fetching position this might take several minutes</p>
         ) : position.data.length === 0 && !position.isLoading ? (
